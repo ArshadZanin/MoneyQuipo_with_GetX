@@ -1,0 +1,30 @@
+import 'package:get/get.dart';
+import 'package:money_management/db/database_transaction.dart';
+
+class AccountController extends GetxController{
+  final handler = Get.put(DatabaseHandler());
+
+  var assets = 0.0.obs;
+  var liabilities = 0.0.obs;
+  var total = 0.0.obs;
+
+
+
+
+  @override
+  void onInit() {
+    super.onInit();
+    handler.initializeDB().whenComplete(() async {
+      dataTake();
+    });
+  }
+
+  void dataTake() async {
+    final String? assets12 = await handler.calculateAssetsTotal();
+    assets = double.parse(assets12!).obs;
+
+    final String? liabilities12 = await handler.calculateLiabilitiesTotal();
+    liabilities = double.parse(liabilities12!).obs;
+  }
+
+}
