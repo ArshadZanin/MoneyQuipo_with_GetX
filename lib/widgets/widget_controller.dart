@@ -169,4 +169,20 @@ class WidgetController extends GetxController{
     );
   }
 
+  Widget submitButton(Function() onPress){
+    return FlatButton(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10)),
+      color: Colors.red,
+      padding: const EdgeInsets.only(
+          top: 10, bottom: 10, right: 50, left: 50),
+      onPressed: onPress,
+      child: const Text(
+        'Save',
+        style: TextStyle(color: Colors.white),
+      ),
+    );
+  }
+
+
 }

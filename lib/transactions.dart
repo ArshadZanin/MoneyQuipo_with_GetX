@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:intl/intl.dart';
 import 'package:money_management/getx_controller/transactions_controller.dart';
+import 'package:money_management/transaction/add_transaction.dart';
 import 'package:money_management/widgets/widget_controller.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -41,13 +42,13 @@ class _TransactionState extends State<Transaction> {
   final values = Get.put(TransactionController());
 
 
+
   @override
   void initState() {
     super.initState();
     handler.initializeDB().whenComplete(() async {
 
       values.dataTake();
-
       setState(() {});
     });
     Future.delayed(const Duration(milliseconds: 500), () {
@@ -276,6 +277,32 @@ class _TransactionState extends State<Transaction> {
                                 itemBuilder: (BuildContext context, int index) {
                                   index = snapshot.data!.length - index - 1;
                                   return Dismissible(
+                                    confirmDismiss: (DismissDirection direction) async {
+                                      return await showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Text('Confirm'),
+                                            content: const Text(
+                                                'Are you sure you wish to delete this item?'),
+                                            actions: <Widget>[
+                                              FlatButton(
+                                                  onPressed: () =>
+                                                      Navigator.of(context).pop(true),
+                                                  child: const Text(
+                                                    'DELETE',
+                                                    style: TextStyle(color: Colors.red),
+                                                  )),
+                                              FlatButton(
+                                                onPressed: () =>
+                                                    Navigator.of(context).pop(false),
+                                                child: const Text('CANCEL'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
                                     direction: DismissDirection.endToStart,
                                     background: Container(
                                       color: Colors.red,
@@ -293,6 +320,8 @@ class _TransactionState extends State<Transaction> {
                                         snapshot.data!
                                             .remove(snapshot.data![index]);
                                       });
+
+                                      values.dataTake();
                                     },
                                     child: snapshot.data![index].date ==
                                         _dateController.text
@@ -306,7 +335,15 @@ class _TransactionState extends State<Transaction> {
                                       elevation: 3,
                                       color: app_color.list,
                                       child: ListTile(
-                                        onLongPress: () {
+                                        onLongPress: (){
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (_) => AddTrans(
+                                                  transaction: snapshot.data![index],
+                                                  transactionIndex: snapshot.data![index].id,)));
+                                        },
+                                        onTap: () {
                                           showDialog<String>(
                                             context: context,
                                             builder: (BuildContext context) =>
@@ -356,17 +393,7 @@ class _TransactionState extends State<Transaction> {
                                                 ),
                                           );
                                         },
-                                        contentPadding:
-                                        const EdgeInsets.all(9.0),
-                                        title: Text(
-                                          '${snapshot.data![index].category!}'
-                                              ' \n ${snapshot.data![index]
-                                              .date}',
-                                          style: const TextStyle(
-                                              color: app_color.text),
-                                        ),
-                                        subtitle:
-                                        snapshot.data![index].trans ==
+                                        trailing: snapshot.data![index].trans ==
                                             'income'
                                             ? widgets.amountTextWidget(
                                             '+ ${snapshot.data![index]
@@ -376,6 +403,18 @@ class _TransactionState extends State<Transaction> {
                                             '- ${snapshot.data![index]
                                                 .amount.toString()}',
                                             Colors.red),
+                                        contentPadding:
+                                        const EdgeInsets.all(9.0),
+                                        title: Text(
+                                          '${snapshot.data![index].category!}'
+                                              ' \n ${snapshot.data![index]
+                                              .date}',
+                                          style: const TextStyle(
+                                              color: app_color.text),
+                                        ),
+
+                                        // subtitle:
+                                        
                                       ),
                                     )
                                         : Container(),
@@ -397,67 +436,3 @@ class _TransactionState extends State<Transaction> {
     );
   }
 }
-
-// void dataTake() async {
-//   late final _dateYear =
-//   _dateController.text.substring(8, _dateController.text.length);
-//   late final _dateMonth =
-//   _dateController.text.substring(0, _dateController.text.length - 9);
-//
-//
-//   ///take database list to here///
-//   final List<Map<String, Object?>> databaseList =
-//   await handler.retrieveUsersDatabase();
-//   // debugPrint("hello : $databaseList");
-//
-//   ///take date///
-//   final Set<String> dateSet = {};
-//   for (int i = 0; i < databaseList.length; i++) {
-//     final String data = databaseList[i]['date'].toString();
-//     dateSet.add(data);
-//   }
-//   listDate = [...dateSet.toList()].obs;
-//   for (int i = 0; i < listDate.length; i++) {
-//     if (listDate[i] == _dateController.text) {
-//       flag = 1;
-//     }
-//   }
-//
-//   ///income month///
-//   double total = 0;
-//   for (int j = 0; j < databaseList.length; j++) {
-//     final String dateIs = databaseList[j]['date']
-//         .toString()
-//         .substring(0, databaseList[j]['date'].toString().length - 9);
-//     final String dateLast = databaseList[j]['date']
-//         .toString()
-//         .substring(8, databaseList[j]['date'].toString().length);
-//     if (dateIs == _dateMonth &&
-//         dateLast == _dateYear &&
-//         databaseList[j]['trans'] == 'income') {
-//       final double value = double.parse(databaseList[j]['amount']
-//           .toString());
-//       total = total + value;
-//     }
-//   }
-//   income = total;
-//
-//   ///expense month///
-//   double total1 = 0;
-//   for (int j = 0; j < databaseList.length; j++) {
-//     final String dateIs = databaseList[j]['date']
-//         .toString()
-//         .substring(0, databaseList[j]['date'].toString().length - 9);
-//     final String dateLast = databaseList[j]['date']
-//         .toString()
-//         .substring(8, databaseList[j]['date'].toString().length);
-//     if (dateIs == _dateMonth &&
-//         dateLast == _dateYear &&
-//         databaseList[j]['trans'] == 'expense') {
-//       final double value = double
-//           .parse(databaseList[j]['amount'].toString());
-//       total1 = total1 + value;
-//     }
-//   }
-//   expense = total1;
-// }

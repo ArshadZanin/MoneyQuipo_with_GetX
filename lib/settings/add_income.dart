@@ -2,30 +2,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:get/get.dart';
 // Project imports:
 import 'package:money_management/color/app_color.dart' as app_color;
 import 'package:money_management/db/database_income_category.dart';
 import 'package:money_management/settings/income_category.dart';
+import 'package:money_management/widgets/widget_controller.dart';
 
 class AddIncomeData extends StatefulWidget {
-  final IncomeCategoryDb? user;
-  final int? userIndex;
+  final IncomeCategoryDb? income;
+  final int? incomeIndex;
 
-  const AddIncomeData({this.user, this.userIndex,Key? key}) : super(key: key);
+  const AddIncomeData({this.income, this.incomeIndex,Key? key}) : super(key: key);
 
   @override
   State<AddIncomeData> createState() => _AddIncomeDataState();
 }
 
 class _AddIncomeDataState extends State<AddIncomeData> {
+
+  final widgets = Get.put(WidgetController());
+
   String? _incomeCategory;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-    if (widget.user != null) {
-      _incomeCategory = widget.user!.incomeCategory;
+    if (widget.income != null) {
+      _incomeCategory = widget.income!.incomeCategory;
     }
   }
 
@@ -86,38 +91,46 @@ class _AddIncomeDataState extends State<AddIncomeData> {
             const SizedBox(
               height: 20,
             ),
+            widget.income == null ?
             Center(
-              child: FlatButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                color: Colors.red,
-                padding: const EdgeInsets.only(
-                    top: 10, bottom: 10, right: 50, left: 50),
-                onPressed: () async {
+              child: widgets.submitButton(() async {
                   if (!_formKey.currentState!.validate()) {
                     return;
                   }
 
                   _formKey.currentState!.save();
                   final IncomeCategoryDb user =
-                      IncomeCategoryDb(incomeCategory: _incomeCategory);
+                  IncomeCategoryDb(incomeCategory: _incomeCategory);
 
                   final List<IncomeCategoryDb> listofIncomeCategoryDb = [user];
 
-                  final DatabaseHandlerIncomeCategory db =
-                      DatabaseHandlerIncomeCategory();
+                  final db =
+                  Get.put(DatabaseHandlerIncomeCategory());
 
                   await db.insertIncomeCategory(listofIncomeCategoryDb);
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                           builder: (_) => const IncomeCategory()));
-                },
-                child: const Text(
-                  'Save',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
+              }),
+            )
+                : Center(
+              child: widgets.submitButton(() async {
+                if (!_formKey.currentState!.validate()) {
+                  return;
+                }
+
+                _formKey.currentState!.save();
+
+                final db =
+                Get.put(DatabaseHandlerIncomeCategory());
+
+                await db.updateIncomeCategory(widget.incomeIndex!, _incomeCategory!);
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const IncomeCategory()));
+              }),
             ),
           ],
         ),

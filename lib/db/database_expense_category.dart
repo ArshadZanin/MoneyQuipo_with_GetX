@@ -53,12 +53,25 @@ class DatabaseHandlerExpenseCategory extends GetxController {
   }
 
   Future<int> insertExpenseCategory(
-      List<ExpenseCategoryDb> expenseCategories) async {
+      List<ExpenseCategoryDb> expenseCategories) async{
     int result = 0;
     final Database db = await initializeDB();
     for (var expenseCategory in expenseCategories) {
       result = await db.insert('expenseCategories', expenseCategory.toMap());
     }
+    return result;
+  }
+
+  ///update expense category///
+  Future<int> updateExpenseCategory(
+      int id, String category) async {
+    final db = await database;
+    final data = {
+      'expenseCategory': category
+    };
+    final result = await db!.update(
+        'expenseCategories', data, where: 'id = ?', whereArgs: [id]
+    );
     return result;
   }
 

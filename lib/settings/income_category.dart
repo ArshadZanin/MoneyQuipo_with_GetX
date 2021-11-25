@@ -118,6 +118,14 @@ class _IncomeCategoryState extends State<IncomeCategory> {
                         child: Card(
                           elevation: 5,
                           child: ListTile(
+                            onTap: (){
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (_) =>
+                                  AddIncomeData(
+                                      income: snapshot.data![index],
+                                      incomeIndex: snapshot.data![index].id
+                                  )));
+                            },
                             tileColor: const Color(0xFFffffff),
                             contentPadding: const EdgeInsets.only(
                                 left: 20, top: 10, bottom: 10),

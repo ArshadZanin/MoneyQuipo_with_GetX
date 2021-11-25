@@ -2,30 +2,36 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+
+import 'package:get/get.dart';
 // Project imports:
 import 'package:money_management/color/app_color.dart' as app_color;
 import 'package:money_management/db/database_expense_category.dart';
+import 'package:money_management/widgets/widget_controller.dart';
 import 'expense_category.dart';
 
 class AddExpenseData extends StatefulWidget {
-  final ExpenseCategoryDb? user;
-  final int? userIndex;
+  final ExpenseCategoryDb? expense;
+  final int? expenseIndex;
 
-  const AddExpenseData({this.user, this.userIndex,Key? key}) : super(key: key);
+  const AddExpenseData({this.expense, this.expenseIndex,Key? key}) : super(key: key);
 
   @override
   State<AddExpenseData> createState() => _AddExpenseDataState();
 }
 
 class _AddExpenseDataState extends State<AddExpenseData> {
+
+  final widgets = Get.put(WidgetController());
+
   String? _expenseCategory;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-    if (widget.user != null) {
-      _expenseCategory = widget.user!.expenseCategory;
+    if (widget.expense != null) {
+      _expenseCategory = widget.expense!.expenseCategory;
     }
   }
 
@@ -86,38 +92,44 @@ class _AddExpenseDataState extends State<AddExpenseData> {
             const SizedBox(
               height: 20,
             ),
+            widget.expense == null ?
             Center(
-              child: FlatButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                color: Colors.red,
-                padding: const EdgeInsets.only(
-                    top: 10, bottom: 10, right: 50, left: 50),
-                onPressed: () async {
-                  debugPrint('Saved');
-                  debugPrint('clicked');
-                  if (!_formKey.currentState!.validate()) {
-                    return;
-                  }
+              child: widgets.submitButton(() async{
+                if (!_formKey.currentState!.validate()) {
+                  return;
+                }
 
-                  _formKey.currentState!.save();
-                  final ExpenseCategoryDb user =
-                      ExpenseCategoryDb(expenseCategory: _expenseCategory);
-                 final List<ExpenseCategoryDb> listofExpenseCategoryDb = [user];
-                  final DatabaseHandlerExpenseCategory db =
-                      DatabaseHandlerExpenseCategory();
-                  await db.insertExpenseCategory(listofExpenseCategoryDb);
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => const ExpenseCategory()));
-                },
-                child: const Text(
-                  'Save',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
+                _formKey.currentState!.save();
+                final ExpenseCategoryDb user =
+                ExpenseCategoryDb(expenseCategory: _expenseCategory);
+                final List<ExpenseCategoryDb> listofExpenseCategoryDb = [user];
+                final db = Get.put(DatabaseHandlerExpenseCategory());
+                await db.insertExpenseCategory(listofExpenseCategoryDb);
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const ExpenseCategory()));
+              }),
+            )
+                : Center(
+              child: widgets.submitButton(() async{
+                if (!_formKey.currentState!.validate()) {
+                  return;
+                }
+
+                _formKey.currentState!.save();
+                final db = Get.put(DatabaseHandlerExpenseCategory());
+                await db.updateExpenseCategory(
+                    widget.expenseIndex!,
+                    _expenseCategory!
+                );
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const ExpenseCategory()));
+              }),
             ),
+
           ],
         ),
       ),

@@ -62,6 +62,19 @@ class DatabaseHandlerIncomeCategory extends GetxController{
     return result;
   }
 
+  ///update income category///
+  Future<int> updateIncomeCategory(
+      int id, String category) async {
+    final db = await database;
+    final data = {
+      'incomeCategory': category
+    };
+    final result = await db!.update(
+        'incomeCategories', data, where: 'id = ?', whereArgs: [id]
+    );
+    return result;
+  }
+
   Future<List<IncomeCategoryDb>> retrieveUsers() async {
     final Database db = await initializeDB();
     final List<Map<String, Object?>> queryResult =

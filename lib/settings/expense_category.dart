@@ -119,6 +119,14 @@ class _ExpenseCategoryState extends State<ExpenseCategory> {
                         child: Card(
                           elevation: 5,
                           child: ListTile(
+                            onTap: (){
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (_) =>
+                                      AddExpenseData(
+                                          expense: snapshot.data![index],
+                                          expenseIndex: snapshot.data![index].id
+                                      )));
+                            },
                             tileColor: const Color(0xFFffffff),
                             contentPadding: const EdgeInsets.only(
                                 left: 20, top: 10, bottom: 10),
