@@ -79,6 +79,7 @@ class _TransactionState extends State<Transaction> {
     return count;
   }
 
+  @Deprecated('message')
   @override
   Widget build(BuildContext context) {
     return Scaffold(

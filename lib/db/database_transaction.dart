@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+
+///database of transaction
 class User {
   final int? id;
   final String? trans;
@@ -46,6 +48,7 @@ class User {
   }
 }
 
+///database handler of transaction with getX controller
 class DatabaseHandler extends GetxController {
   Database? _database;
 
@@ -61,6 +64,7 @@ class DatabaseHandler extends GetxController {
     return _database;
   }
 
+  ///this function is use to initialize the database
   Future<Database> initializeDB() async {
     final String path = await getDatabasesPath();
     return openDatabase(
@@ -76,6 +80,7 @@ class DatabaseHandler extends GetxController {
     );
   }
 
+  ///this function is used to insert the transaction into database
   Future<int> insertUser(List<User> users) async {
     int result = 0;
     final Database db = await initializeDB();
@@ -85,7 +90,7 @@ class DatabaseHandler extends GetxController {
     return result;
   }
 
-  ///update user data///
+  ///this function is used to update user data into database
   Future<int> updateUser({
     required int id,
     required String trans,
@@ -115,12 +120,14 @@ class DatabaseHandler extends GetxController {
     return result;
   }
 
+  ///this function is used to fetch data from database
   Future<List<User>> retrieveUsers() async {
     final Database db = await initializeDB();
     final List<Map<String, Object?>> queryResult = await db.query('users');
     return queryResult.map((e) => User.fromMap(e)).toList();
   }
 
+  ///this function is used to delete data from database with the id of the row
   Future<void> deleteUser(int id) async {
     final db = await initializeDB();
     await db.delete(
@@ -130,6 +137,7 @@ class DatabaseHandler extends GetxController {
     );
   }
 
+  ///this function is used for calculate and return the total income
   Future<String?> calculateIncomeTotal() async {
     String income;
     final dbClient = await initializeDB();
@@ -144,6 +152,7 @@ class DatabaseHandler extends GetxController {
     return income;
   }
 
+  ///this function is used for calculate and return the total expense
   Future<String?> calculateExpenseTotal() async {
     String expense;
     final dbClient = await initializeDB();
@@ -158,6 +167,7 @@ class DatabaseHandler extends GetxController {
     return expense;
   }
 
+  ///this function is used for calculate and return the total assets
   Future<String?> calculateAssetsTotal() async {
     String assets;
     final dbClient = await initializeDB();
@@ -172,6 +182,7 @@ class DatabaseHandler extends GetxController {
     return assets;
   }
 
+  ///this function is used for calculate and return the total liabilities
   Future<String?> calculateLiabilitiesTotal() async {
     String liabilities;
     final dbClient = await initializeDB();
@@ -186,11 +197,13 @@ class DatabaseHandler extends GetxController {
     return liabilities;
   }
 
+  ///this function is used for delete database
   Future<void> deleteDb() async {
     final db = await initializeDB();
     await db.rawQuery('delete from users');
   }
 
+  ///this function is used for fetch data with category
   Future<Map<String, double>> retrieveWithCategory(String trans) async {
     String? amount;
     final Database db = await initializeDB();
@@ -223,6 +236,7 @@ class DatabaseHandler extends GetxController {
     return categoryAmount;
   }
 
+  ///this function is used for fetch data with category today's
   Future<Map<String, double>> retrieveWithCategoryToday(
       String trans, String date) async {
     String? amount;
@@ -260,6 +274,7 @@ class DatabaseHandler extends GetxController {
     return categoryAmount;
   }
 
+  ///this function is used for fetch data with category of this year
   Future<Map<String, double>> retrieveWithCategoryYear(
       String trans, String date) async {
     String? amount;
@@ -295,6 +310,7 @@ class DatabaseHandler extends GetxController {
     return categoryAmount;
   }
 
+  ///this function is used for fetch data with category of this month
   Future<Map<String, double>> retrieveWithCategoryMonth(
       String trans, String month, String year) async {
     String? amount;
@@ -329,6 +345,7 @@ class DatabaseHandler extends GetxController {
     return categoryAmount;
   }
 
+  ///this function is used for retrieve user database
   Future<List<Map<String, Object?>>> retrieveUsersDatabase() async {
     final Database db = await initializeDB();
     final List<Map<String, Object?>> queryResult = await db.query('users');

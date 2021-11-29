@@ -759,15 +759,6 @@ class _AddTransState extends State<AddTrans> {
 
                         _formKey.currentState!.save();
 
-                        final User student = User(
-                            trans: _transaction,
-                            date: _saveDate,
-                            account: _account,
-                            category: _category,
-                            amount: _amount,
-                            note: _note);
-
-
                         final db = Get.put(DatabaseHandler());
 
                         await db.updateUser(

@@ -8,7 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
 import 'package:money_management/color/app_color.dart' as app_color;
-import 'package:money_management/db/database_passcode.dart';
 import 'package:money_management/home.dart';
 
 class SecurityPasscode extends StatefulWidget {

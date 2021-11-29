@@ -4,6 +4,8 @@ import 'dart:ui';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+///we add, delete, update the colors what we need
+
 const Color appBar = Color(0xFFffffff);
 const Color back = Color(0xFFF5F5F5);
 const Color widget = Color(0xFFffffff);

@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-//income category database
+///time reminder database
 
 class TimeDb {
   final int? id;
@@ -25,6 +25,7 @@ class TimeDb {
   }
 }
 
+///database handler of reminder with getX controller
 class DatabaseHandlerTime extends GetxController{
   Database? _database;
 
@@ -40,6 +41,7 @@ class DatabaseHandlerTime extends GetxController{
     return _database;
   }
 
+  ///this function is use to initialize the database
   Future<Database> initializeDB() async {
     final String path = await getDatabasesPath();
     return openDatabase(
@@ -54,6 +56,7 @@ class DatabaseHandlerTime extends GetxController{
     );
   }
 
+  ///this function is used to insert the reminder into database
   Future<int> insertReminder(List<TimeDb> reminders) async {
     int result = 0;
     final Database db = await initializeDB();
@@ -64,12 +67,14 @@ class DatabaseHandlerTime extends GetxController{
     return result;
   }
 
+  ///this function is used to fetch data from database
   Future<List<TimeDb>> retrieveUsers() async {
     final Database db = await initializeDB();
     final List<Map<String, Object?>> queryResult = await db.query('reminders');
     return queryResult.map((e) => TimeDb.fromMap(e)).toList();
   }
 
+  ///this function is used to delete data from database with the id of the row
   Future<void> deleteTime(int id) async {
     final db = await initializeDB();
     await db.delete(
@@ -79,11 +84,13 @@ class DatabaseHandlerTime extends GetxController{
     );
   }
 
+  ///this function is used to delete database
   Future<void> deleteDb() async {
     final db = await initializeDB();
     await db.rawQuery('delete from reminders');
   }
 
+  ///this function is used to retrieve the time of last add
   Future<String?> retrieveWithTime() async {
     String? time;
     final Database db = await initializeDB();
@@ -97,6 +104,7 @@ class DatabaseHandlerTime extends GetxController{
     return time;
   }
 
+  ///this function is used to retrieve the boolean value of last add
   Future<bool?> retrieveWithReminder() async {
     String? reminder;
     final Database db = await initializeDB();
@@ -115,6 +123,7 @@ class DatabaseHandlerTime extends GetxController{
     }
   }
 
+  ///this function is used to retrieve the id of last added row
   Future<int?> retrieveWithId() async {
     String? id;
     final Database db = await initializeDB();

@@ -4,13 +4,14 @@ import 'package:money_management/db/database_transaction.dart';
 class AccountController extends GetxController{
   final handler = Get.put(DatabaseHandler());
 
+  ///variable declaration
   var assets = 0.0.obs;
   var liabilities = 0.0.obs;
   var total = 0.0.obs;
 
 
 
-
+///init in getX
   @override
   void onInit() {
     super.onInit();
@@ -19,6 +20,7 @@ class AccountController extends GetxController{
     });
   }
 
+  ///take data from database and update the variables
   void dataTake() async {
     final String? assets12 = await handler.calculateAssetsTotal();
     assets = double.parse(assets12!).obs;
