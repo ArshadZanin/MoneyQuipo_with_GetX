@@ -10,6 +10,7 @@ import 'package:money_management/color/app_color.dart' as app_color;
 import 'package:money_management/db/database_expense_category.dart';
 import 'package:money_management/db/database_income_category.dart';
 import 'package:money_management/db/database_transaction.dart';
+import 'package:money_management/home.dart';
 import 'package:money_management/splash%20screen/splash_screen.dart';
 import 'package:money_management/widgets/widget_controller.dart';
 
@@ -88,6 +89,19 @@ class _AddTransState extends State<AddTrans> {
       // await this.addUsers();
       setState(() {});
     });
+    categoryListing();
+    setState(() {});
+
+  }
+
+  Future<void> categoryListing() async {
+
+
+    income12 = [];
+    expense12 = [];
+
+    incomeCategory = ['<select>'];
+    expenseCategory = ['<select>'];
 
     ///income Category to list///
     handlerIncome = DatabaseHandlerIncomeCategory();
@@ -374,418 +388,451 @@ class _AddTransState extends State<AddTrans> {
   @Deprecated('message')
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      // backgroundColor: Colors.indigo,v
-      appBar: AppBar(
-        elevation: 0.2,
-        title: Text(
-          section == 0 ? 'Income' : 'Expense',
-          style: const TextStyle(color: Colors.white),
+    return WillPopScope(
+      onWillPop: () async{
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) =>
+        const MyHomePage()), (route) => true);
+        return true;
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        // backgroundColor: Colors.indigo,v
+        appBar: AppBar(
+          elevation: 0.2,
+          title: Text(
+            section == 0 ? 'Income' : 'Expense',
+            style: const TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.indigo,
+          leading: IconButton(onPressed: (){
+            Navigator.pop(context);
+          }, icon: const Icon(Icons.arrow_back)),
         ),
-        backgroundColor: Colors.indigo,
-      ),
-      body: ListView(children: [
-        Container(
-          color: app_color.back,
-          child: Column(children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                section == 0
-                    ? FlatButton(
-                        splashColor: Colors.white,
-                        hoverColor: Colors.white,
-                        focusColor: Colors.white,
-                        onPressed: () {
-                          setState(() {
-                            _category = '<select>';
-                            section = 0;
-                            _transaction = 'income';
-                          });
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.only(left: 30, right: 30),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: Colors.blue)),
-                          child: const Text(
-                            'Income',
-                            style: TextStyle(color: Colors.blue, fontSize: 18),
+        body: ListView(children: [
+          Container(
+            color: app_color.back,
+            child: Column(children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  section == 0
+                      ? FlatButton(
+                          splashColor: Colors.white,
+                          hoverColor: Colors.white,
+                          focusColor: Colors.white,
+                          onPressed: () {
+                            setState(() {
+                              _category = '<select>';
+                              section = 0;
+                              _transaction = 'income';
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.only(left: 30, right: 30),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: Colors.blue)),
+                            child: const Text(
+                              'Income',
+                              style: TextStyle(color: Colors.blue, fontSize: 18),
+                            ),
+                          ),
+                        )
+                      : FlatButton(
+                          splashColor: Colors.white,
+                          hoverColor: Colors.white,
+                          focusColor: Colors.white,
+                          onPressed: () {
+                            setState(() {
+                              _category = '<select>';
+                              section = 0;
+                              _transaction = 'income';
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.only(left: 30, right: 30),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: Colors.grey)),
+                            child: const Text(
+                              'Income',
+                              style: TextStyle(color: Colors.grey, fontSize: 18),
+                            ),
                           ),
                         ),
-                      )
-                    : FlatButton(
-                        splashColor: Colors.white,
-                        hoverColor: Colors.white,
-                        focusColor: Colors.white,
-                        onPressed: () {
-                          setState(() {
-                            _category = '<select>';
-                            section = 0;
-                            _transaction = 'income';
-                          });
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.only(left: 30, right: 30),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: Colors.grey)),
-                          child: const Text(
-                            'Income',
-                            style: TextStyle(color: Colors.grey, fontSize: 18),
+                  section != 0
+                      ? FlatButton(
+                          splashColor: Colors.white,
+                          hoverColor: Colors.white,
+                          focusColor: Colors.white,
+                          onPressed: () {
+                            setState(() {
+                              _category = '<select>';
+                              section = 1;
+                              _transaction = 'expense';
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.only(left: 30, right: 30),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: Colors.red)),
+                            child: const Text(
+                              'Expense',
+                              style: TextStyle(color: Colors.red, fontSize: 18),
+                            ),
+                          ),
+                        )
+                      : FlatButton(
+                          splashColor: Colors.white,
+                          hoverColor: Colors.white,
+                          focusColor: Colors.white,
+                          onPressed: () {
+                            setState(() {
+                              _category = '<select>';
+                              section = 1;
+                              _transaction = 'expense';
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.only(left: 30, right: 30),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: Colors.grey)),
+                            child: const Text(
+                              'Expense',
+                              style: TextStyle(color: Colors.grey, fontSize: 18),
+                            ),
                           ),
                         ),
-                      ),
-                section != 0
-                    ? FlatButton(
-                        splashColor: Colors.white,
-                        hoverColor: Colors.white,
-                        focusColor: Colors.white,
-                        onPressed: () {
-                          setState(() {
-                            _category = '<select>';
-                            section = 1;
-                            _transaction = 'expense';
-                          });
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.only(left: 30, right: 30),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: Colors.red)),
-                          child: const Text(
-                            'Expense',
-                            style: TextStyle(color: Colors.red, fontSize: 18),
-                          ),
-                        ),
-                      )
-                    : FlatButton(
-                        splashColor: Colors.white,
-                        hoverColor: Colors.white,
-                        focusColor: Colors.white,
-                        onPressed: () {
-                          setState(() {
-                            _category = '<select>';
-                            section = 1;
-                            _transaction = 'expense';
-                          });
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.only(left: 30, right: 30),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: Colors.grey)),
-                          child: const Text(
-                            'Expense',
-                            style: TextStyle(color: Colors.grey, fontSize: 18),
-                          ),
-                        ),
-                      ),
-              ],
-            ),
-            Form(
-              key: _formKey,
-              child: Container(
-                margin: const EdgeInsets.only(top: 10),
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.white,
-                ),
-                width: MediaQuery.of(context).size.width - 10,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    _buildDate(context),
-                    _buildAccount(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        section == 0 ? _buildCategory1() : _buildCategory2(),
-                        section == 0
-                            ? IconButton(
-                                onPressed: () {
-                                  debugPrint('blue Clicked');
-                                  showModalBottomSheet(
-                                    context: context,
-                                    builder: (BuildContext context) => ListView(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              bottom: MediaQuery.of(context)
-                                                  .viewInsets
-                                                  .bottom),
-                                          child: Container(
-                                            alignment: Alignment.center,
-                                            height: 150,
-                                            child: Form(
-                                              key: _formKey1,
-                                              child: Column(
-                                                children: [
-                                                  Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20),
-                                                      color: Colors.white,
+                ],
+              ),
+              Form(
+                key: _formKey,
+                child: Container(
+                  margin: const EdgeInsets.only(top: 10),
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.white,
+                  ),
+                  width: MediaQuery.of(context).size.width - 10,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      _buildDate(context),
+                      _buildAccount(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          section == 0 ? _buildCategory1() : _buildCategory2(),
+                          section == 0
+                              ? IconButton(
+                                  onPressed: () {
+                                    debugPrint('blue Clicked');
+                                    showModalBottomSheet(
+                                      context: context,
+                                      builder: (BuildContext context) => ListView(
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                                bottom: MediaQuery.of(context)
+                                                    .viewInsets
+                                                    .bottom),
+                                            child: Container(
+                                              alignment: Alignment.center,
+                                              height: 150,
+                                              child: Form(
+                                                key: _formKey1,
+                                                child: Column(
+                                                  children: [
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                20),
+                                                        color: Colors.white,
+                                                      ),
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 20),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          _buildItem(),
+                                                        ],
+                                                      ),
                                                     ),
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 20),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        _buildItem(),
-                                                      ],
+                                                    Center(
+                                                      child: widgets.submitButton(()async{
+                                                        if (!_formKey1
+                                                            .currentState!
+                                                            .validate()) {
+                                                          return;
+                                                        }
+
+                                                        _formKey1.currentState!
+                                                            .save();
+                                                        debugPrint('saved');
+                                                        final IncomeCategoryDb
+                                                        user =
+                                                        IncomeCategoryDb(
+                                                            incomeCategory:
+                                                            _incomeCategory);
+
+                                                        final List<
+                                                            IncomeCategoryDb>
+                                                        listofIncomeCategoryDb =
+                                                        [user];
+
+                                                        final DatabaseHandlerIncomeCategory
+                                                        db =
+                                                        DatabaseHandlerIncomeCategory();
+
+                                                        await db.insertIncomeCategory(
+                                                            listofIncomeCategoryDb);
+
+                                                        debugPrint('insert');
+                                                        _incomeCategory = '';
+                                                        Navigator.pop(context);
+                                                        categoryListing();
+                                                        // Navigator.pushReplacement(
+                                                        //     context,
+                                                        //     MaterialPageRoute(
+                                                        //         builder: (_) =>
+                                                        //         const AddTrans()));
+                                                        setState(() {
+
+                                                        });
+                                                      }),
                                                     ),
-                                                  ),
-                                                  Center(
-                                                    child: widgets.submitButton(()async{
-                                                      if (!_formKey1
-                                                          .currentState!
-                                                          .validate()) {
-                                                        return;
-                                                      }
-
-                                                      _formKey1.currentState!
-                                                          .save();
-                                                      debugPrint('saved');
-                                                      final IncomeCategoryDb
-                                                      user =
-                                                      IncomeCategoryDb(
-                                                          incomeCategory:
-                                                          _incomeCategory);
-
-                                                      final List<
-                                                          IncomeCategoryDb>
-                                                      listofIncomeCategoryDb =
-                                                      [user];
-
-                                                      final DatabaseHandlerIncomeCategory
-                                                      db =
-                                                      DatabaseHandlerIncomeCategory();
-
-                                                      await db.insertIncomeCategory(
-                                                          listofIncomeCategoryDb);
-
-                                                      debugPrint('insert');
-                                                      Navigator.pop(context);
-                                                      Navigator.pushReplacement(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (_) =>
-                                                              const AddTrans()));
-                                                    }),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                                icon: const Icon(
-                                  Icons.add,
-                                  color: Colors.blue,
-                                ),
-                              )
-                            : IconButton(
-                                onPressed: () {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    builder: (BuildContext context) => ListView(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              bottom: MediaQuery.of(context)
-                                                  .viewInsets
-                                                  .bottom),
-                                          child: Container(
-                                            alignment: Alignment.center,
-                                            height: 150,
-                                            child: Form(
-                                              key: _formKey2,
-                                              child: Column(
-                                                children: [
-                                                  Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20),
-                                                      color: Colors.white,
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  icon: const Icon(
+                                    Icons.add,
+                                    color: Colors.blue,
+                                  ),
+                                )
+                              : IconButton(
+                                  onPressed: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      builder: (BuildContext context) => ListView(
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                                bottom: MediaQuery.of(context)
+                                                    .viewInsets
+                                                    .bottom),
+                                            child: Container(
+                                              alignment: Alignment.center,
+                                              height: 150,
+                                              child: Form(
+                                                key: _formKey2,
+                                                child: Column(
+                                                  children: [
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                20),
+                                                        color: Colors.white,
+                                                      ),
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 20),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          _buildItem1(),
+                                                        ],
+                                                      ),
                                                     ),
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 20),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        _buildItem1(),
-                                                      ],
+                                                    Center(
+                                                      child: widgets.submitButton(() async{
+                                                        if (!_formKey2
+                                                            .currentState!
+                                                            .validate()) {
+                                                          return;
+                                                        }
+
+                                                        _formKey2.currentState!
+                                                            .save();
+                                                        final ExpenseCategoryDb
+                                                        user1 =
+                                                        ExpenseCategoryDb(
+                                                            expenseCategory:
+                                                            _expenseCategory);
+
+                                                        final List<
+                                                            ExpenseCategoryDb>
+                                                        listofExpenseCategoryDb =
+                                                        [user1];
+
+                                                        final DatabaseHandlerExpenseCategory
+                                                        db =
+                                                        DatabaseHandlerExpenseCategory();
+
+                                                        await db.insertExpenseCategory(
+                                                            listofExpenseCategoryDb);
+                                                        debugPrint('insert');
+                                                        _expenseCategory = '';
+                                                        Navigator.pop(context);
+                                                        categoryListing();
+                                                        // Navigator.pushReplacement(
+                                                        //     context,
+                                                        //     MaterialPageRoute(
+                                                        //         builder: (_) =>
+                                                        //         const AddTrans()));
+                                                        setState(() {
+
+                                                        });
+                                                      }),
                                                     ),
-                                                  ),
-                                                  Center(
-                                                    child: widgets.submitButton(() async{
-                                                      if (!_formKey2
-                                                          .currentState!
-                                                          .validate()) {
-                                                        return;
-                                                      }
-
-                                                      _formKey2.currentState!
-                                                          .save();
-                                                      final ExpenseCategoryDb
-                                                      user1 =
-                                                      ExpenseCategoryDb(
-                                                          expenseCategory:
-                                                          _expenseCategory);
-
-                                                      final List<
-                                                          ExpenseCategoryDb>
-                                                      listofExpenseCategoryDb =
-                                                      [user1];
-
-                                                      final DatabaseHandlerExpenseCategory
-                                                      db =
-                                                      DatabaseHandlerExpenseCategory();
-
-                                                      await db.insertExpenseCategory(
-                                                          listofExpenseCategoryDb);
-                                                      debugPrint('insert');
-                                                      Navigator.pop(context);
-                                                      Navigator.pushReplacement(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (_) =>
-                                                              const AddTrans()));
-                                                    }),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                                icon: const Icon(
-                                  Icons.add,
-                                  color: Colors.red,
-                                )),
-                      ],
-                    ),
-                    _buildAmount(),
-                    _buildNote(),
-                    widget.transaction == null ?
-                    RaisedButton(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 50, vertical: 15),
-                      color: Colors.indigo,
-                      child: const Text(
-                        'Save',
-                        style: TextStyle(
-                          color: Colors.white,
-                          letterSpacing: 2,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  icon: const Icon(
+                                    Icons.add,
+                                    color: Colors.red,
+                                  )),
+                        ],
                       ),
-                      onPressed: () async {
-                        if (_category == '<select>' && section == 0) {
-                          _category = 'Cash';
-                        } else if (_category == '<select>' && section == 1) {
-                          _category = 'Food';
-                        }
-
-                        if (!_formKey.currentState!.validate()) {
-                          return;
-                        }
-
-                        _formKey.currentState!.save();
-
-                        final User student = User(
-                            trans: _transaction,
-                            date: _saveDate,
-                            account: _account,
-                            category: _category,
-                            amount: _amount,
-                            note: _note);
-
-                        final List<User> listOfUser = [student];
-
-                        final db = Get.put(DatabaseHandler());
-
-                        await db.insertUser(listOfUser);
-
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const HomePageAssist(),
+                      _buildAmount(),
+                      _buildNote(),
+                      widget.transaction == null ?
+                      RaisedButton(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 50, vertical: 15),
+                        color: Colors.indigo,
+                        child: const Text(
+                          'Save',
+                          style: TextStyle(
+                            color: Colors.white,
+                            letterSpacing: 2,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
-                        );
-                      },
-                    ) :
-                    RaisedButton(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 50, vertical: 15),
-                      color: Colors.indigo,
-                      child: const Text(
-                        'Save',
-                        style: TextStyle(
-                          color: Colors.white,
-                          letterSpacing: 2,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
                         ),
-                      ),
-                      onPressed: () async {
-                        if (_category == '<select>' && section == 0) {
-                          _category = 'Cash';
-                        } else if (_category == '<select>' && section == 1) {
-                          _category = 'Food';
-                        }
+                        onPressed: () async {
 
-                        if (!_formKey.currentState!.validate()) {
-                          return;
-                        }
+                          String transaction = _transaction;
 
-                        _formKey.currentState!.save();
+                          if (_category == '<select>' && section == 0) {
+                            _category = 'Cash';
+                          } else if (_category == '<select>' && section == 1) {
+                            _category = 'Food';
+                          }
 
-                        final db = Get.put(DatabaseHandler());
+                          if (!_formKey.currentState!.validate()) {
+                            return;
+                          }
 
-                        await db.updateUser(
-                            id: widget.transactionIndex!,
-                            trans: _transaction,
-                            date: _saveDate,
-                            account: _account!,
-                            category: _category!,
-                            amount: _amount!,
-                            note: _note!
-                        );
+                          _formKey.currentState!.save();
 
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const HomePageAssist(),
+                          if(double.parse(_amount!) < 0){
+                            transaction == 'income' ?
+                            transaction = 'expense' :
+                            transaction = 'income';
+
+                            _amount = (int.parse(_amount!) * -1).toString();
+                          }
+
+                          final User student = User(
+                              trans: transaction,
+                              date: _saveDate,
+                              account: _account,
+                              category: _category,
+                              amount: _amount,
+                              note: _note);
+
+                          final List<User> listOfUser = [student];
+
+                          final db = Get.put(DatabaseHandler());
+
+                          await db.insertUser(listOfUser);
+
+                          // Navigator.pushReplacement(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => const HomePageAssist(),
+                          //   ),
+                          // );
+                          Navigator.pop(context);
+                        },
+                      ) :
+                      RaisedButton(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 50, vertical: 15),
+                        color: Colors.indigo,
+                        child: const Text(
+                          'Save',
+                          style: TextStyle(
+                            color: Colors.white,
+                            letterSpacing: 2,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
-                        );
-                      },
-                    ),
-                  ],
+                        ),
+                        onPressed: () async {
+                          if (_category == '<select>' && section == 0) {
+                            _category = 'Cash';
+                          } else if (_category == '<select>' && section == 1) {
+                            _category = 'Food';
+                          }
+
+                          if (!_formKey.currentState!.validate()) {
+                            return;
+                          }
+
+                          _formKey.currentState!.save();
+
+                          final db = Get.put(DatabaseHandler());
+
+                          await db.updateUser(
+                              id: widget.transactionIndex!,
+                              trans: _transaction,
+                              date: _saveDate,
+                              account: _account!,
+                              category: _category!,
+                              amount: _amount!,
+                              note: _note!
+                          );
+
+                          // Navigator.pushReplacement(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => const HomePageAssist(),
+                          //   ),
+                          // );
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ]),
-        ),
-      ]),
+            ]),
+          ),
+        ]),
+      ),
     );
   }
 }

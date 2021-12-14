@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:get/get.dart';
+// import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -178,12 +178,12 @@ class _OnboardState extends State<Onboard> with SingleTickerProviderStateMixin {
                 final DatabaseHandlerTime db0 = DatabaseHandlerTime();
                 await db0.insertReminder(listofTimeDb);
 
-                // Navigator.pushReplacement(context,
-                //     MaterialPageRoute(builder: (context) {
-                //   return const HomePageAssist();
-                // }));
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) {
+                  return const HomePageAssist();
+                }));
 
-                Get.off(const HomePageAssist());
+                // Get.off(const HomePageAssist());
               },
               child: FadingSlidingWidget(
                 animationController: _animationController!,

@@ -201,8 +201,7 @@ class _ConfigureState extends State<Configure> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (_) => const HomePageAssist()));
+            Navigator.pop(context);
           },
         ),
       ),

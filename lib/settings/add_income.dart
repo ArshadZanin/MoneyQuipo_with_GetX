@@ -108,10 +108,12 @@ class _AddIncomeDataState extends State<AddIncomeData> {
                   Get.put(DatabaseHandlerIncomeCategory());
 
                   await db.insertIncomeCategory(listofIncomeCategoryDb);
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => const IncomeCategory()));
+                  db.update();
+                  // Navigator.pushReplacement(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (_) => const IncomeCategory()));
+                Navigator.pop(context);
               }),
             )
                 : Center(
@@ -126,10 +128,12 @@ class _AddIncomeDataState extends State<AddIncomeData> {
                 Get.put(DatabaseHandlerIncomeCategory());
 
                 await db.updateIncomeCategory(widget.incomeIndex!, _incomeCategory!);
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => const IncomeCategory()));
+                db.update();
+                // Navigator.pushReplacement(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (_) => const IncomeCategory()));
+                Navigator.pop(context);
               }),
             ),
           ],

@@ -46,8 +46,7 @@ class _IncomeCategoryState extends State<IncomeCategory> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (_) => const Configure()));
+              Navigator.pop(context);
             },
           ),
           actions: [

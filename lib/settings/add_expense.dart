@@ -105,10 +105,12 @@ class _AddExpenseDataState extends State<AddExpenseData> {
                 final List<ExpenseCategoryDb> listofExpenseCategoryDb = [user];
                 final db = Get.put(DatabaseHandlerExpenseCategory());
                 await db.insertExpenseCategory(listofExpenseCategoryDb);
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => const ExpenseCategory()));
+                db.update();
+                // Navigator.pushReplacement(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (_) => const ExpenseCategory()));
+                Navigator.pop(context);
               }),
             )
                 : Center(
@@ -123,10 +125,12 @@ class _AddExpenseDataState extends State<AddExpenseData> {
                     widget.expenseIndex!,
                     _expenseCategory!
                 );
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => const ExpenseCategory()));
+                db.update();
+                // Navigator.pushReplacement(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (_) => const ExpenseCategory()));
+                Navigator.pop(context);
               }),
             ),
 
