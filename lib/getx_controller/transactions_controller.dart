@@ -96,6 +96,8 @@ class TransactionController extends GetxController{
       }
     }
     expense = total1.obs;
+
+    debugPrint('data taken');
   }
 
   ///this is used for check the time
@@ -111,5 +113,6 @@ class TransactionController extends GetxController{
       }
     }
   }
+
 
 }

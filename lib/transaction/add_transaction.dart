@@ -772,6 +772,7 @@ class _AddTransState extends State<AddTrans> {
 
                           await db.insertUser(listOfUser);
                           db.update();
+                          Navigator.pop(context);
                           transactionRefresh.dataTake();
                           // Navigator.pushReplacement(
                           //   context,
@@ -779,7 +780,6 @@ class _AddTransState extends State<AddTrans> {
                           //     builder: (context) => const HomePageAssist(),
                           //   ),
                           // );
-                          Navigator.pop(context);
                         },
                       ) :
                       RaisedButton(
@@ -820,7 +820,7 @@ class _AddTransState extends State<AddTrans> {
                               note: _note!
                           );
                           db.update();
-                          transactionRefresh.dataTake();
+
                           // Navigator.pushReplacement(
                           //   context,
                           //   MaterialPageRoute(
@@ -828,7 +828,7 @@ class _AddTransState extends State<AddTrans> {
                           //   ),
                           // );
                           Navigator.pop(context);
-
+                          transactionRefresh.dataTake();
                         },
                       ),
                     ],

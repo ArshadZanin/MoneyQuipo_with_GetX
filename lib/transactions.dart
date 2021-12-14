@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -87,6 +86,12 @@ class _TransactionState extends State<Transaction> {
       backgroundColor: app_color.back,
       appBar: AppBar(
         actions: [
+          IconButton(onPressed: (){
+            values.dataTake();
+            setState(() {
+
+            });
+            }, icon: Icon(Icons.add,color: Colors.green,)),
           SizedBox(
             width: 100,
             child: Center(
@@ -165,7 +170,7 @@ class _TransactionState extends State<Transaction> {
                     mainColor1: app_color.greenBox1,
                     mainColor2: app_color.greenBox2,
                     heading: 'Earned',
-                    value: '+${values.income}',
+                    value: '${values.income}',
                     name: 'income'
                 ),
                 widgets.boxW(10),
@@ -175,7 +180,7 @@ class _TransactionState extends State<Transaction> {
                     mainColor1: app_color.redBox1,
                     mainColor2: app_color.redBox2,
                     heading: 'Spent',
-                    value: '-${values.expense}',
+                    value: '${values.expense}',
                     name: 'expense'
                 ),
                 widgets.boxW(10),
@@ -276,6 +281,13 @@ class _TransactionState extends State<Transaction> {
                               return ListView.builder(
                                 itemCount: snapshot.data?.length,
                                 itemBuilder: (BuildContext context, int index) {
+                                  if(index - 1 == snapshot.data!.length){
+                                    setState(() {
+                                      
+                                    });
+                                  }
+
+
                                   index = snapshot.data!.length - index - 1;
                                   return Dismissible(
                                     confirmDismiss: (DismissDirection direction) async {
@@ -415,7 +427,7 @@ class _TransactionState extends State<Transaction> {
                                         ),
 
                                         // subtitle:
-                                        
+
                                       ),
                                     )
                                         : Container(),
