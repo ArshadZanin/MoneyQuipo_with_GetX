@@ -10,6 +10,7 @@ import 'package:money_management/color/app_color.dart' as app_color;
 import 'package:money_management/db/database_expense_category.dart';
 import 'package:money_management/db/database_income_category.dart';
 import 'package:money_management/db/database_transaction.dart';
+import 'package:money_management/getx_controller/transactions_controller.dart';
 import 'package:money_management/home.dart';
 import 'package:money_management/splash%20screen/splash_screen.dart';
 import 'package:money_management/widgets/widget_controller.dart';
@@ -39,6 +40,8 @@ class AddTrans extends StatefulWidget {
 }
 
 class _AddTransState extends State<AddTrans> {
+
+  final transactionRefresh = Get.put(TransactionController());
   final widgets = Get.put(WidgetController());
 
   String? _incomeCategory;
@@ -768,7 +771,8 @@ class _AddTransState extends State<AddTrans> {
                           final db = Get.put(DatabaseHandler());
 
                           await db.insertUser(listOfUser);
-
+                          db.update();
+                          transactionRefresh.dataTake();
                           // Navigator.pushReplacement(
                           //   context,
                           //   MaterialPageRoute(
@@ -815,7 +819,8 @@ class _AddTransState extends State<AddTrans> {
                               amount: _amount!,
                               note: _note!
                           );
-
+                          db.update();
+                          transactionRefresh.dataTake();
                           // Navigator.pushReplacement(
                           //   context,
                           //   MaterialPageRoute(
@@ -823,6 +828,7 @@ class _AddTransState extends State<AddTrans> {
                           //   ),
                           // );
                           Navigator.pop(context);
+
                         },
                       ),
                     ],
