@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:money_management/widgets/widget_controller.dart';
+import 'package:money_management/old/widgets/widget_controller.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 // Project imports:
-import 'package:money_management/color/app_color.dart' as app_color;
-import 'package:money_management/db/database_transaction.dart';
+import 'package:money_management/old/color/app_color.dart' as app_color;
+import 'package:money_management/old/db/database_transaction.dart';
 
 class Stats extends StatefulWidget {
   const Stats({Key? key}) : super(key: key);
@@ -19,7 +19,6 @@ class Stats extends StatefulWidget {
 }
 
 class _StatsState extends State<Stats> with SingleTickerProviderStateMixin {
-
   final widgets = Get.put(WidgetController());
 
   late final _dateToday = DateFormat('MMM dd, yyyy').format(DateTime.now());
@@ -89,8 +88,8 @@ class _StatsState extends State<Stats> with SingleTickerProviderStateMixin {
         for (int j = 0; j < databaseList.length; j++) {
           if (databaseList[j]['date'] == _dateToday &&
               databaseList[j]['category'] == listCategory[i]) {
-            final double value = double.parse(databaseList[j]['amount']
-                .toString());
+            final double value =
+                double.parse(databaseList[j]['amount'].toString());
             total = total + value;
           }
         }
@@ -116,8 +115,8 @@ class _StatsState extends State<Stats> with SingleTickerProviderStateMixin {
         for (int j = 0; j < databaseList.length; j++) {
           if (databaseList[j]['date'] == _dateToday &&
               databaseList[j]['category'] == listCategory1[i]) {
-            final double value = double.parse(databaseList[j]['amount']
-                .toString());
+            final double value =
+                double.parse(databaseList[j]['amount'].toString());
             total = total + value;
           }
         }
@@ -150,8 +149,8 @@ class _StatsState extends State<Stats> with SingleTickerProviderStateMixin {
           if (dateIs == _dateMonth &&
               dateLast == _dateYear &&
               databaseList[j]['category'] == listCategory2[i]) {
-            final double value = double.parse(databaseList[j]['amount']
-                .toString());
+            final double value =
+                double.parse(databaseList[j]['amount'].toString());
             total = total + value;
           }
         }
@@ -184,8 +183,8 @@ class _StatsState extends State<Stats> with SingleTickerProviderStateMixin {
           if (dateIs == _dateMonth &&
               dateLast == _dateYear &&
               databaseList[j]['category'] == listCategory3[i]) {
-            final double value = double.parse(databaseList[j]['amount']
-                .toString());
+            final double value =
+                double.parse(databaseList[j]['amount'].toString());
             total = total + value;
           }
         }
@@ -215,8 +214,8 @@ class _StatsState extends State<Stats> with SingleTickerProviderStateMixin {
           debugPrint('Date is : $dateIs');
           if (dateIs == _dateYear &&
               databaseList[j]['category'] == listCategory4[i]) {
-            final double value = double.parse(databaseList[j]['amount']
-                .toString());
+            final double value =
+                double.parse(databaseList[j]['amount'].toString());
             total = total + value;
           }
         }
@@ -245,8 +244,8 @@ class _StatsState extends State<Stats> with SingleTickerProviderStateMixin {
               .substring(8, databaseList[j]['date'].toString().length);
           if (dateIs == _dateYear &&
               databaseList[j]['category'] == listCategory5[i]) {
-            final double value = double.parse(databaseList[j]['amount']
-                .toString());
+            final double value =
+                double.parse(databaseList[j]['amount'].toString());
             total = total + value;
           }
         }
@@ -297,8 +296,7 @@ class _StatsState extends State<Stats> with SingleTickerProviderStateMixin {
       return Text(_dateMonth);
     } else if (_value == 'Annually') {
       return Text(_dateYear);
-    }
-    else if (_value == 'Today') {
+    } else if (_value == 'Today') {
       return Text(_dateToday);
     } else {
       return const Text('Total');
@@ -330,12 +328,8 @@ class _StatsState extends State<Stats> with SingleTickerProviderStateMixin {
                 value: _value,
                 borderRadius: BorderRadius.circular(10.0),
                 dropdownColor: app_color.back,
-                items: <String>[
-                  'Today',
-                  'Monthly',
-                  'Annually',
-                  'Total'
-                ].map((String value) {
+                items: <String>['Today', 'Monthly', 'Annually', 'Total']
+                    .map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(

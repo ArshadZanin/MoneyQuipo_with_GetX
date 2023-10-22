@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:money_management/db/database_transaction.dart';
+import 'package:money_management/old/db/database_transaction.dart';
 
-class AccountController extends GetxController{
+class AccountController extends GetxController {
   final handler = Get.put(DatabaseHandler());
 
   ///variable declaration
@@ -9,9 +9,7 @@ class AccountController extends GetxController{
   var liabilities = 0.0.obs;
   var total = 0.0.obs;
 
-
-
-///init in getX
+  ///init in getX
   @override
   void onInit() {
     super.onInit();
@@ -28,5 +26,4 @@ class AccountController extends GetxController{
     final String? liabilities12 = await handler.calculateLiabilitiesTotal();
     liabilities = double.parse(liabilities12!).obs;
   }
-
 }

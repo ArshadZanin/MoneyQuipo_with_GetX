@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:money_management/color/app_color.dart' as app_color;
+import 'package:money_management/old/color/app_color.dart' as app_color;
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-
-class WidgetController extends GetxController{
-
-  Widget boxH(double value){
+class WidgetController extends GetxController {
+  Widget boxH(double value) {
     return SizedBox(
       height: value,
     );
   }
 
-  Widget boxW(double value){
+  Widget boxW(double value) {
     return SizedBox(
       width: value,
     );
@@ -26,7 +24,7 @@ class WidgetController extends GetxController{
     required String heading,
     required String value,
     required String name,
-  }){
+  }) {
     return Expanded(
       flex: 1,
       child: Material(
@@ -41,16 +39,15 @@ class WidgetController extends GetxController{
             // color: app_color.widget,
             gradient: LinearGradient(
               begin: Alignment.topLeft,
-              end: Alignment
-                  .bottomRight,
+              end: Alignment.bottomRight,
               colors: <Color>[
                 mainColor1,
                 // Color(0xff11c211),
                 // Color(0xff2ad054),
                 mainColor2
               ], // red to yellow
-              tileMode: TileMode
-                  .repeated, // repeats the gradient over the canvas
+              tileMode:
+                  TileMode.repeated, // repeats the gradient over the canvas
             ),
           ),
           child: Center(
@@ -89,57 +86,51 @@ class WidgetController extends GetxController{
     );
   }
 
-  Widget amountTextWidget(String amount,Color textColor){
+  Widget amountTextWidget(String amount, Color textColor) {
     return Text(
       amount,
       textAlign: TextAlign.end,
-      style: TextStyle(
-          color: textColor,
-          fontSize: 18),
+      style: TextStyle(color: textColor, fontSize: 18),
     );
   }
 
-  Widget accountTexts({
-    required String heading,
-    required double amount,
-    required Color colorAmount
-  }){
+  Widget accountTexts(
+      {required String heading,
+      required double amount,
+      required Color colorAmount}) {
     return Expanded(
-        flex: 1,
-        child: Column(
-          children: [
-            Text(
-              heading,
-              style: const TextStyle(
-                  color: app_color.textWhite,
-              ),
+      flex: 1,
+      child: Column(
+        children: [
+          Text(
+            heading,
+            style: const TextStyle(
+              color: app_color.textWhite,
             ),
-            Text(
-              '$amount',
-              style: TextStyle(
-                  color: colorAmount,
-              ),
+          ),
+          Text(
+            '$amount',
+            style: TextStyle(
+              color: colorAmount,
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget statsHeading({required String head}){
+  Widget statsHeading({required String head}) {
     return Text(
       '$head Stats by category',
       style: const TextStyle(
-          color: Colors.black,
-          fontSize: 20,
-          fontWeight: FontWeight.bold),
+          color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
     );
   }
 
-  Widget settingIcon({
-    required Function() onPress,
-    required IconData icon,
-    required String name
-  }){
+  Widget settingIcon(
+      {required Function() onPress,
+      required IconData icon,
+      required String name}) {
     return Column(
       children: [
         boxH(20),
@@ -152,30 +143,28 @@ class WidgetController extends GetxController{
         ),
         Center(
             child: Text(
-              name,
-              style: const TextStyle(color: Colors.black),
-            )),
+          name,
+          style: const TextStyle(color: Colors.black),
+        )),
       ],
     );
   }
 
-  Widget passcodeButton(String num, Function() onPress){
-    return FlatButton(
-        onPressed: onPress,
-        child: Text(
-          num,
-          style: const TextStyle(color: app_color.text, fontSize: 33),
-        ),
+  Widget passcodeButton(String num, Function() onPress) {
+    return ElevatedButton(
+      onPressed: onPress,
+      child: Text(
+        num,
+        style: const TextStyle(color: app_color.text, fontSize: 33),
+      ),
     );
   }
 
-  Widget submitButton(Function() onPress){
-    return FlatButton(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10)),
-      color: Colors.red,
-      padding: const EdgeInsets.only(
-          top: 10, bottom: 10, right: 50, left: 50),
+  Widget submitButton(Function() onPress) {
+    return TextButton(
+      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      // color: Colors.red,
+      // padding: const EdgeInsets.only(top: 10, bottom: 10, right: 50, left: 50),
       onPressed: onPress,
       child: const Text(
         'Save',
@@ -183,6 +172,4 @@ class WidgetController extends GetxController{
       ),
     );
   }
-
-
 }

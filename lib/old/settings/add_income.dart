@@ -4,23 +4,23 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 // Project imports:
-import 'package:money_management/color/app_color.dart' as app_color;
-import 'package:money_management/db/database_income_category.dart';
-import 'package:money_management/settings/income_category.dart';
-import 'package:money_management/widgets/widget_controller.dart';
+import 'package:money_management/old/color/app_color.dart' as app_color;
+import 'package:money_management/old/db/database_income_category.dart';
+import 'package:money_management/old/settings/income_category.dart';
+import 'package:money_management/old/widgets/widget_controller.dart';
 
 class AddIncomeData extends StatefulWidget {
   final IncomeCategoryDb? income;
   final int? incomeIndex;
 
-  const AddIncomeData({this.income, this.incomeIndex,Key? key}) : super(key: key);
+  const AddIncomeData({this.income, this.incomeIndex, Key? key})
+      : super(key: key);
 
   @override
   State<AddIncomeData> createState() => _AddIncomeDataState();
 }
 
 class _AddIncomeDataState extends State<AddIncomeData> {
-
   final widgets = Get.put(WidgetController());
 
   String? _incomeCategory;
@@ -91,51 +91,52 @@ class _AddIncomeDataState extends State<AddIncomeData> {
             const SizedBox(
               height: 20,
             ),
-            widget.income == null ?
-            Center(
-              child: widgets.submitButton(() async {
-                  if (!_formKey.currentState!.validate()) {
-                    return;
-                  }
+            widget.income == null
+                ? Center(
+                    child: widgets.submitButton(() async {
+                      if (!_formKey.currentState!.validate()) {
+                        return;
+                      }
 
-                  _formKey.currentState!.save();
-                  final IncomeCategoryDb user =
-                  IncomeCategoryDb(incomeCategory: _incomeCategory);
+                      _formKey.currentState!.save();
+                      final IncomeCategoryDb user =
+                          IncomeCategoryDb(incomeCategory: _incomeCategory);
 
-                  final List<IncomeCategoryDb> listofIncomeCategoryDb = [user];
+                      final List<IncomeCategoryDb> listofIncomeCategoryDb = [
+                        user
+                      ];
 
-                  final db =
-                  Get.put(DatabaseHandlerIncomeCategory());
+                      final db = Get.put(DatabaseHandlerIncomeCategory());
 
-                  await db.insertIncomeCategory(listofIncomeCategoryDb);
-                  db.update();
-                  // Navigator.pushReplacement(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (_) => const IncomeCategory()));
-                Navigator.pop(context);
-              }),
-            )
+                      await db.insertIncomeCategory(listofIncomeCategoryDb);
+                      db.update();
+                      // Navigator.pushReplacement(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (_) => const IncomeCategory()));
+                      Navigator.pop(context);
+                    }),
+                  )
                 : Center(
-              child: widgets.submitButton(() async {
-                if (!_formKey.currentState!.validate()) {
-                  return;
-                }
+                    child: widgets.submitButton(() async {
+                      if (!_formKey.currentState!.validate()) {
+                        return;
+                      }
 
-                _formKey.currentState!.save();
+                      _formKey.currentState!.save();
 
-                final db =
-                Get.put(DatabaseHandlerIncomeCategory());
+                      final db = Get.put(DatabaseHandlerIncomeCategory());
 
-                await db.updateIncomeCategory(widget.incomeIndex!, _incomeCategory!);
-                db.update();
-                // Navigator.pushReplacement(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (_) => const IncomeCategory()));
-                Navigator.pop(context);
-              }),
-            ),
+                      await db.updateIncomeCategory(
+                          widget.incomeIndex!, _incomeCategory!);
+                      db.update();
+                      // Navigator.pushReplacement(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (_) => const IncomeCategory()));
+                      Navigator.pop(context);
+                    }),
+                  ),
           ],
         ),
       ),

@@ -10,8 +10,8 @@ import 'package:animations/animations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
-import 'package:money_management/home.dart';
-import 'package:money_management/splash%20screen/security_passcode.dart';
+import 'package:money_management/old/home.dart';
+import 'package:money_management/old/splash%20screen/security_passcode.dart';
 
 class SplashScreen1 extends StatefulWidget {
   const SplashScreen1({Key? key}) : super(key: key);

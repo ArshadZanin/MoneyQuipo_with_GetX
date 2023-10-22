@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 // Project imports:
-import 'package:money_management/splash%20screen/splash_screen.dart';
+import 'package:money_management/old/splash%20screen/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());

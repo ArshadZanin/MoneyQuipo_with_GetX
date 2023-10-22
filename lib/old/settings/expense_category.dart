@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 // Project imports:
-import 'package:money_management/color/app_color.dart' as app_color;
-import 'package:money_management/db/database_expense_category.dart';
-import 'package:money_management/settings/add_expense.dart';
-import 'package:money_management/settings/configure.dart';
+import 'package:money_management/old/color/app_color.dart' as app_color;
+import 'package:money_management/old/db/database_expense_category.dart';
+import 'package:money_management/old/settings/add_expense.dart';
+import 'package:money_management/old/settings/configure.dart';
 
 class ExpenseCategory extends StatefulWidget {
   const ExpenseCategory({Key? key}) : super(key: key);
@@ -76,17 +76,16 @@ class _ExpenseCategoryState extends State<ExpenseCategory> {
                             return AlertDialog(
                               title: const Text('Confirm'),
                               content: const Text(
-                                  'Are you sure you wish to delete this item?'
-                              ),
+                                  'Are you sure you wish to delete this item?'),
                               actions: <Widget>[
-                                FlatButton(
+                                TextButton(
                                     onPressed: () =>
                                         Navigator.of(context).pop(true),
                                     child: const Text(
                                       'DELETE',
                                       style: TextStyle(color: Colors.red),
                                     )),
-                                FlatButton(
+                                TextButton(
                                   onPressed: () =>
                                       Navigator.of(context).pop(false),
                                   child: const Text('CANCEL'),
@@ -114,13 +113,14 @@ class _ExpenseCategoryState extends State<ExpenseCategory> {
                       child: Card(
                         elevation: 5,
                         child: ListTile(
-                          onTap: (){
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (_) =>
-                                    AddExpenseData(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => AddExpenseData(
                                         expense: snapshot.data![index],
-                                        expenseIndex: snapshot.data![index].id
-                                    )));
+                                        expenseIndex:
+                                            snapshot.data![index].id)));
                           },
                           tileColor: const Color(0xFFffffff),
                           contentPadding: const EdgeInsets.only(

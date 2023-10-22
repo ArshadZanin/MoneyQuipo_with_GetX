@@ -7,12 +7,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 // Project imports:
-import 'package:money_management/db/database_expense_category.dart';
-import 'package:money_management/db/database_income_category.dart';
-import 'package:money_management/db/database_reminder.dart';
-import 'package:money_management/db/database_transaction.dart';
-import 'package:money_management/onboard_anime/welcome_page.dart';
-import 'package:money_management/splash%20screen/splash_screen.dart';
+import 'package:money_management/old/db/database_expense_category.dart';
+import 'package:money_management/old/db/database_income_category.dart';
+import 'package:money_management/old/db/database_reminder.dart';
+import 'package:money_management/old/db/database_transaction.dart';
+import 'package:money_management/old/onboard_anime/welcome_page.dart';
+import 'package:money_management/old/splash%20screen/splash_screen.dart';
 import 'fading_sliding_widget.dart';
 import 'onboard_page.dart';
 import 'onboard_page_item.dart';
@@ -32,15 +32,13 @@ class _OnboardState extends State<Onboard> with SingleTickerProviderStateMixin {
   List<OnboardPageItem> onboardPageItems = [
     OnboardPageItem(
       lottieAsset: 'assets/animations/add.json',
-      text:
-          'You can add income and expenses with'
-              ' different accounts in different categories',
+      text: 'You can add income and expenses with'
+          ' different accounts in different categories',
     ),
     OnboardPageItem(
       lottieAsset: 'assets/animations/calculating.json',
-      text:
-          'You can calculate and manage expenses'
-              ' and incomes or assets and liabilities',
+      text: 'You can calculate and manage expenses'
+          ' and incomes or assets and liabilities',
       animationDuration: const Duration(milliseconds: 1100),
     ),
     OnboardPageItem(

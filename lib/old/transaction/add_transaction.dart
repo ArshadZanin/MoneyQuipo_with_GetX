@@ -6,14 +6,14 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
-import 'package:money_management/color/app_color.dart' as app_color;
-import 'package:money_management/db/database_expense_category.dart';
-import 'package:money_management/db/database_income_category.dart';
-import 'package:money_management/db/database_transaction.dart';
-import 'package:money_management/getx_controller/transactions_controller.dart';
-import 'package:money_management/home.dart';
-import 'package:money_management/splash%20screen/splash_screen.dart';
-import 'package:money_management/widgets/widget_controller.dart';
+import 'package:money_management/old/color/app_color.dart' as app_color;
+import 'package:money_management/old/db/database_expense_category.dart';
+import 'package:money_management/old/db/database_income_category.dart';
+import 'package:money_management/old/db/database_transaction.dart';
+import 'package:money_management/old/getx_controller/transactions_controller.dart';
+import 'package:money_management/old/home.dart';
+import 'package:money_management/old/splash%20screen/splash_screen.dart';
+import 'package:money_management/old/widgets/widget_controller.dart';
 
 class AddTrans extends StatefulWidget {
   final User? transaction;
@@ -40,7 +40,6 @@ class AddTrans extends StatefulWidget {
 }
 
 class _AddTransState extends State<AddTrans> {
-
   final transactionRefresh = Get.put(TransactionController());
   final widgets = Get.put(WidgetController());
 
@@ -94,12 +93,9 @@ class _AddTransState extends State<AddTrans> {
     });
     categoryListing();
     setState(() {});
-
   }
 
   Future<void> categoryListing() async {
-
-
     income12 = [];
     expense12 = [];
 
@@ -140,9 +136,9 @@ class _AddTransState extends State<AddTrans> {
 
     if (widget.transaction != null) {
       _transaction = widget.transaction!.trans!;
-      if(_transaction == 'income'){
+      if (_transaction == 'income') {
         section = 0;
-      }else{
+      } else {
         section = 1;
       }
       _saveDate = widget.transaction!.date!;
@@ -392,9 +388,11 @@ class _AddTransState extends State<AddTrans> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async{
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) =>
-        const MyHomePage()), (route) => true);
+      onWillPop: () async {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (_) => const MyHomePage()),
+            (route) => true);
         return true;
       },
       child: Scaffold(
@@ -407,9 +405,11 @@ class _AddTransState extends State<AddTrans> {
             style: const TextStyle(color: Colors.white),
           ),
           backgroundColor: Colors.indigo,
-          leading: IconButton(onPressed: (){
-            Navigator.pop(context);
-          }, icon: const Icon(Icons.arrow_back)),
+          leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.arrow_back)),
         ),
         body: ListView(children: [
           Container(
@@ -419,10 +419,10 @@ class _AddTransState extends State<AddTrans> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   section == 0
-                      ? FlatButton(
-                          splashColor: Colors.white,
-                          hoverColor: Colors.white,
-                          focusColor: Colors.white,
+                      ? TextButton(
+                          // splashColor: Colors.white,
+                          // hoverColor: Colors.white,
+                          // focusColor: Colors.white,
                           onPressed: () {
                             setState(() {
                               _category = '<select>';
@@ -437,14 +437,15 @@ class _AddTransState extends State<AddTrans> {
                                 border: Border.all(color: Colors.blue)),
                             child: const Text(
                               'Income',
-                              style: TextStyle(color: Colors.blue, fontSize: 18),
+                              style:
+                                  TextStyle(color: Colors.blue, fontSize: 18),
                             ),
                           ),
                         )
-                      : FlatButton(
-                          splashColor: Colors.white,
-                          hoverColor: Colors.white,
-                          focusColor: Colors.white,
+                      : TextButton(
+                          // splashColor: Colors.white,
+                          // hoverColor: Colors.white,
+                          // focusColor: Colors.white,
                           onPressed: () {
                             setState(() {
                               _category = '<select>';
@@ -459,15 +460,16 @@ class _AddTransState extends State<AddTrans> {
                                 border: Border.all(color: Colors.grey)),
                             child: const Text(
                               'Income',
-                              style: TextStyle(color: Colors.grey, fontSize: 18),
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 18),
                             ),
                           ),
                         ),
                   section != 0
-                      ? FlatButton(
-                          splashColor: Colors.white,
-                          hoverColor: Colors.white,
-                          focusColor: Colors.white,
+                      ? TextButton(
+                          // splashColor: Colors.white,
+                          // hoverColor: Colors.white,
+                          // focusColor: Colors.white,
                           onPressed: () {
                             setState(() {
                               _category = '<select>';
@@ -486,10 +488,10 @@ class _AddTransState extends State<AddTrans> {
                             ),
                           ),
                         )
-                      : FlatButton(
-                          splashColor: Colors.white,
-                          hoverColor: Colors.white,
-                          focusColor: Colors.white,
+                      : TextButton(
+                          // splashColor: Colors.white,
+                          // hoverColor: Colors.white,
+                          // focusColor: Colors.white,
                           onPressed: () {
                             setState(() {
                               _category = '<select>';
@@ -504,7 +506,8 @@ class _AddTransState extends State<AddTrans> {
                                 border: Border.all(color: Colors.grey)),
                             child: const Text(
                               'Expense',
-                              style: TextStyle(color: Colors.grey, fontSize: 18),
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 18),
                             ),
                           ),
                         ),
@@ -535,7 +538,8 @@ class _AddTransState extends State<AddTrans> {
                                     debugPrint('blue Clicked');
                                     showModalBottomSheet(
                                       context: context,
-                                      builder: (BuildContext context) => ListView(
+                                      builder: (BuildContext context) =>
+                                          ListView(
                                         children: [
                                           Padding(
                                             padding: EdgeInsets.only(
@@ -552,12 +556,12 @@ class _AddTransState extends State<AddTrans> {
                                                     Container(
                                                       decoration: BoxDecoration(
                                                         borderRadius:
-                                                            BorderRadius.circular(
-                                                                20),
+                                                            BorderRadius
+                                                                .circular(20),
                                                         color: Colors.white,
                                                       ),
                                                       padding: const EdgeInsets
-                                                              .symmetric(
+                                                          .symmetric(
                                                           horizontal: 20),
                                                       child: Column(
                                                         crossAxisAlignment:
@@ -569,7 +573,9 @@ class _AddTransState extends State<AddTrans> {
                                                       ),
                                                     ),
                                                     Center(
-                                                      child: widgets.submitButton(()async{
+                                                      child: widgets
+                                                          .submitButton(
+                                                              () async {
                                                         if (!_formKey1
                                                             .currentState!
                                                             .validate()) {
@@ -580,19 +586,19 @@ class _AddTransState extends State<AddTrans> {
                                                             .save();
                                                         debugPrint('saved');
                                                         final IncomeCategoryDb
-                                                        user =
-                                                        IncomeCategoryDb(
-                                                            incomeCategory:
-                                                            _incomeCategory);
+                                                            user =
+                                                            IncomeCategoryDb(
+                                                                incomeCategory:
+                                                                    _incomeCategory);
 
                                                         final List<
-                                                            IncomeCategoryDb>
-                                                        listofIncomeCategoryDb =
-                                                        [user];
+                                                                IncomeCategoryDb>
+                                                            listofIncomeCategoryDb =
+                                                            [user];
 
                                                         final DatabaseHandlerIncomeCategory
-                                                        db =
-                                                        DatabaseHandlerIncomeCategory();
+                                                            db =
+                                                            DatabaseHandlerIncomeCategory();
 
                                                         await db.insertIncomeCategory(
                                                             listofIncomeCategoryDb);
@@ -606,9 +612,7 @@ class _AddTransState extends State<AddTrans> {
                                                         //     MaterialPageRoute(
                                                         //         builder: (_) =>
                                                         //         const AddTrans()));
-                                                        setState(() {
-
-                                                        });
+                                                        setState(() {});
                                                       }),
                                                     ),
                                                   ],
@@ -629,7 +633,8 @@ class _AddTransState extends State<AddTrans> {
                                   onPressed: () {
                                     showModalBottomSheet(
                                       context: context,
-                                      builder: (BuildContext context) => ListView(
+                                      builder: (BuildContext context) =>
+                                          ListView(
                                         children: [
                                           Padding(
                                             padding: EdgeInsets.only(
@@ -646,12 +651,12 @@ class _AddTransState extends State<AddTrans> {
                                                     Container(
                                                       decoration: BoxDecoration(
                                                         borderRadius:
-                                                            BorderRadius.circular(
-                                                                20),
+                                                            BorderRadius
+                                                                .circular(20),
                                                         color: Colors.white,
                                                       ),
                                                       padding: const EdgeInsets
-                                                              .symmetric(
+                                                          .symmetric(
                                                           horizontal: 20),
                                                       child: Column(
                                                         crossAxisAlignment:
@@ -663,7 +668,9 @@ class _AddTransState extends State<AddTrans> {
                                                       ),
                                                     ),
                                                     Center(
-                                                      child: widgets.submitButton(() async{
+                                                      child: widgets
+                                                          .submitButton(
+                                                              () async {
                                                         if (!_formKey2
                                                             .currentState!
                                                             .validate()) {
@@ -673,19 +680,19 @@ class _AddTransState extends State<AddTrans> {
                                                         _formKey2.currentState!
                                                             .save();
                                                         final ExpenseCategoryDb
-                                                        user1 =
-                                                        ExpenseCategoryDb(
-                                                            expenseCategory:
-                                                            _expenseCategory);
+                                                            user1 =
+                                                            ExpenseCategoryDb(
+                                                                expenseCategory:
+                                                                    _expenseCategory);
 
                                                         final List<
-                                                            ExpenseCategoryDb>
-                                                        listofExpenseCategoryDb =
-                                                        [user1];
+                                                                ExpenseCategoryDb>
+                                                            listofExpenseCategoryDb =
+                                                            [user1];
 
                                                         final DatabaseHandlerExpenseCategory
-                                                        db =
-                                                        DatabaseHandlerExpenseCategory();
+                                                            db =
+                                                            DatabaseHandlerExpenseCategory();
 
                                                         await db.insertExpenseCategory(
                                                             listofExpenseCategoryDb);
@@ -698,9 +705,7 @@ class _AddTransState extends State<AddTrans> {
                                                         //     MaterialPageRoute(
                                                         //         builder: (_) =>
                                                         //         const AddTrans()));
-                                                        setState(() {
-
-                                                        });
+                                                        setState(() {});
                                                       }),
                                                     ),
                                                   ],
@@ -720,117 +725,118 @@ class _AddTransState extends State<AddTrans> {
                       ),
                       _buildAmount(),
                       _buildNote(),
-                      widget.transaction == null ?
-                      RaisedButton(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 50, vertical: 15),
-                        color: Colors.indigo,
-                        child: const Text(
-                          'Save',
-                          style: TextStyle(
-                            color: Colors.white,
-                            letterSpacing: 2,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                        onPressed: () async {
+                      widget.transaction == null
+                          ? ElevatedButton(
+                              // padding: const EdgeInsets.symmetric(
+                              //     horizontal: 50, vertical: 15),
+                              // color: Colors.indigo,
+                              child: const Text(
+                                'Save',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  letterSpacing: 2,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              onPressed: () async {
+                                String transaction = _transaction;
 
-                          String transaction = _transaction;
+                                if (_category == '<select>' && section == 0) {
+                                  _category = 'Cash';
+                                } else if (_category == '<select>' &&
+                                    section == 1) {
+                                  _category = 'Food';
+                                }
 
-                          if (_category == '<select>' && section == 0) {
-                            _category = 'Cash';
-                          } else if (_category == '<select>' && section == 1) {
-                            _category = 'Food';
-                          }
+                                if (!_formKey.currentState!.validate()) {
+                                  return;
+                                }
 
-                          if (!_formKey.currentState!.validate()) {
-                            return;
-                          }
+                                _formKey.currentState!.save();
 
-                          _formKey.currentState!.save();
+                                if (double.parse(_amount!) < 0) {
+                                  transaction == 'income'
+                                      ? transaction = 'expense'
+                                      : transaction = 'income';
 
-                          if(double.parse(_amount!) < 0){
-                            transaction == 'income' ?
-                            transaction = 'expense' :
-                            transaction = 'income';
+                                  _amount =
+                                      (int.parse(_amount!) * -1).toString();
+                                }
 
-                            _amount = (int.parse(_amount!) * -1).toString();
-                          }
+                                final User student = User(
+                                    trans: transaction,
+                                    date: _saveDate,
+                                    account: _account,
+                                    category: _category,
+                                    amount: _amount,
+                                    note: _note);
 
-                          final User student = User(
-                              trans: transaction,
-                              date: _saveDate,
-                              account: _account,
-                              category: _category,
-                              amount: _amount,
-                              note: _note);
+                                final List<User> listOfUser = [student];
 
-                          final List<User> listOfUser = [student];
+                                final db = Get.put(DatabaseHandler());
 
-                          final db = Get.put(DatabaseHandler());
+                                await db.insertUser(listOfUser);
+                                db.update();
+                                Navigator.pop(context);
+                                transactionRefresh.dataTake();
+                                // Navigator.pushReplacement(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) => const HomePageAssist(),
+                                //   ),
+                                // );
+                              },
+                            )
+                          : ElevatedButton(
+                              // padding: const EdgeInsets.symmetric(
+                              //     horizontal: 50, vertical: 15),
+                              // color: Colors.indigo,
+                              child: const Text(
+                                'Save',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  letterSpacing: 2,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              onPressed: () async {
+                                if (_category == '<select>' && section == 0) {
+                                  _category = 'Cash';
+                                } else if (_category == '<select>' &&
+                                    section == 1) {
+                                  _category = 'Food';
+                                }
 
-                          await db.insertUser(listOfUser);
-                          db.update();
-                          Navigator.pop(context);
-                          transactionRefresh.dataTake();
-                          // Navigator.pushReplacement(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const HomePageAssist(),
-                          //   ),
-                          // );
-                        },
-                      ) :
-                      RaisedButton(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 50, vertical: 15),
-                        color: Colors.indigo,
-                        child: const Text(
-                          'Save',
-                          style: TextStyle(
-                            color: Colors.white,
-                            letterSpacing: 2,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                        onPressed: () async {
-                          if (_category == '<select>' && section == 0) {
-                            _category = 'Cash';
-                          } else if (_category == '<select>' && section == 1) {
-                            _category = 'Food';
-                          }
+                                if (!_formKey.currentState!.validate()) {
+                                  return;
+                                }
 
-                          if (!_formKey.currentState!.validate()) {
-                            return;
-                          }
+                                _formKey.currentState!.save();
 
-                          _formKey.currentState!.save();
+                                final db = Get.put(DatabaseHandler());
 
-                          final db = Get.put(DatabaseHandler());
+                                await db.updateUser(
+                                    id: widget.transactionIndex!,
+                                    trans: _transaction,
+                                    date: _saveDate,
+                                    account: _account!,
+                                    category: _category!,
+                                    amount: _amount!,
+                                    note: _note!);
+                                db.update();
 
-                          await db.updateUser(
-                              id: widget.transactionIndex!,
-                              trans: _transaction,
-                              date: _saveDate,
-                              account: _account!,
-                              category: _category!,
-                              amount: _amount!,
-                              note: _note!
-                          );
-                          db.update();
-
-                          // Navigator.pushReplacement(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const HomePageAssist(),
-                          //   ),
-                          // );
-                          Navigator.pop(context);
-                          transactionRefresh.dataTake();
-                        },
-                      ),
+                                // Navigator.pushReplacement(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) => const HomePageAssist(),
+                                //   ),
+                                // );
+                                Navigator.pop(context);
+                                transactionRefresh.dataTake();
+                              },
+                            ),
                     ],
                   ),
                 ),

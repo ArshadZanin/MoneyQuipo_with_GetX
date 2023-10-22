@@ -2,26 +2,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
 import 'package:get/get.dart';
 // Project imports:
-import 'package:money_management/color/app_color.dart' as app_color;
-import 'package:money_management/db/database_expense_category.dart';
-import 'package:money_management/widgets/widget_controller.dart';
+import 'package:money_management/old/color/app_color.dart' as app_color;
+import 'package:money_management/old/db/database_expense_category.dart';
+import 'package:money_management/old/widgets/widget_controller.dart';
 import 'expense_category.dart';
 
 class AddExpenseData extends StatefulWidget {
   final ExpenseCategoryDb? expense;
   final int? expenseIndex;
 
-  const AddExpenseData({this.expense, this.expenseIndex,Key? key}) : super(key: key);
+  const AddExpenseData({this.expense, this.expenseIndex, Key? key})
+      : super(key: key);
 
   @override
   State<AddExpenseData> createState() => _AddExpenseDataState();
 }
 
 class _AddExpenseDataState extends State<AddExpenseData> {
-
   final widgets = Get.put(WidgetController());
 
   String? _expenseCategory;
@@ -92,48 +91,47 @@ class _AddExpenseDataState extends State<AddExpenseData> {
             const SizedBox(
               height: 20,
             ),
-            widget.expense == null ?
-            Center(
-              child: widgets.submitButton(() async{
-                if (!_formKey.currentState!.validate()) {
-                  return;
-                }
+            widget.expense == null
+                ? Center(
+                    child: widgets.submitButton(() async {
+                      if (!_formKey.currentState!.validate()) {
+                        return;
+                      }
 
-                _formKey.currentState!.save();
-                final ExpenseCategoryDb user =
-                ExpenseCategoryDb(expenseCategory: _expenseCategory);
-                final List<ExpenseCategoryDb> listofExpenseCategoryDb = [user];
-                final db = Get.put(DatabaseHandlerExpenseCategory());
-                await db.insertExpenseCategory(listofExpenseCategoryDb);
-                db.update();
-                // Navigator.pushReplacement(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (_) => const ExpenseCategory()));
-                Navigator.pop(context);
-              }),
-            )
+                      _formKey.currentState!.save();
+                      final ExpenseCategoryDb user =
+                          ExpenseCategoryDb(expenseCategory: _expenseCategory);
+                      final List<ExpenseCategoryDb> listofExpenseCategoryDb = [
+                        user
+                      ];
+                      final db = Get.put(DatabaseHandlerExpenseCategory());
+                      await db.insertExpenseCategory(listofExpenseCategoryDb);
+                      db.update();
+                      // Navigator.pushReplacement(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (_) => const ExpenseCategory()));
+                      Navigator.pop(context);
+                    }),
+                  )
                 : Center(
-              child: widgets.submitButton(() async{
-                if (!_formKey.currentState!.validate()) {
-                  return;
-                }
+                    child: widgets.submitButton(() async {
+                      if (!_formKey.currentState!.validate()) {
+                        return;
+                      }
 
-                _formKey.currentState!.save();
-                final db = Get.put(DatabaseHandlerExpenseCategory());
-                await db.updateExpenseCategory(
-                    widget.expenseIndex!,
-                    _expenseCategory!
-                );
-                db.update();
-                // Navigator.pushReplacement(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (_) => const ExpenseCategory()));
-                Navigator.pop(context);
-              }),
-            ),
-
+                      _formKey.currentState!.save();
+                      final db = Get.put(DatabaseHandlerExpenseCategory());
+                      await db.updateExpenseCategory(
+                          widget.expenseIndex!, _expenseCategory!);
+                      db.update();
+                      // Navigator.pushReplacement(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (_) => const ExpenseCategory()));
+                      Navigator.pop(context);
+                    }),
+                  ),
           ],
         ),
       ),

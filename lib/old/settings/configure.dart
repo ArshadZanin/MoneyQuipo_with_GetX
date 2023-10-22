@@ -5,17 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
-import 'package:money_management/widgets/widget_controller.dart';
+import 'package:money_management/old/widgets/widget_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
-import 'package:money_management/color/app_color.dart' as app_color;
-import 'package:money_management/db/database_reminder.dart';
-import 'package:money_management/settings/expense_category.dart';
-import 'package:money_management/settings/income_category.dart';
-import 'package:money_management/settings/passcode.dart';
-import 'package:money_management/splash%20screen/splash_screen.dart';
-import 'package:money_management/transaction/add_transaction.dart';
+import 'package:money_management/old/color/app_color.dart' as app_color;
+import 'package:money_management/old/db/database_reminder.dart';
+import 'package:money_management/old/settings/expense_category.dart';
+import 'package:money_management/old/settings/income_category.dart';
+import 'package:money_management/old/settings/passcode.dart';
+import 'package:money_management/old/splash%20screen/splash_screen.dart';
+import 'package:money_management/old/transaction/add_transaction.dart';
 
 class Configure extends StatefulWidget {
   const Configure({Key? key}) : super(key: key);
@@ -25,7 +25,6 @@ class Configure extends StatefulWidget {
 }
 
 class _ConfigureState extends State<Configure> {
-
   final widgets = Get.put(WidgetController());
 
   ///set bool of passcode///
@@ -70,12 +69,11 @@ class _ConfigureState extends State<Configure> {
       finger = (await getBoolValuesSF())!;
     });
 
-
     ///notification settings///
-    const androidInitilize =   AndroidInitializationSettings('app_icon');
-    const iOsInitilize =   IOSInitializationSettings();
+    const androidInitilize = AndroidInitializationSettings('app_icon');
+    const iOsInitilize = IOSInitializationSettings();
     const initializationSettings =
-         InitializationSettings(android: androidInitilize, iOS: iOsInitilize);
+        InitializationSettings(android: androidInitilize, iOS: iOsInitilize);
     appNotification = FlutterLocalNotificationsPlugin();
     appNotification!.initialize(initializationSettings,
         onSelectNotification: notificationSelected);
@@ -85,7 +83,6 @@ class _ConfigureState extends State<Configure> {
     // dates = _time.format(context);
     // handler = DatabaseHandlerTime();
     handler.initializeDB().whenComplete(() async {
-
       ///take data to dates///
       dates = await handler.retrieveWithTime();
 
@@ -100,10 +97,10 @@ class _ConfigureState extends State<Configure> {
   @Deprecated('Notification')
   Future<void> _showNotification(String dates) async {
     const androidDetails =
-         AndroidNotificationDetails('Channel ID', 'Programmer');
-    const iOsDetails =  IOSNotificationDetails();
+        AndroidNotificationDetails('Channel ID', 'Programmer');
+    const iOsDetails = IOSNotificationDetails();
     const generalNotificationDetails =
-         NotificationDetails(android: androidDetails, iOS: iOsDetails);
+        NotificationDetails(android: androidDetails, iOS: iOsDetails);
 
     Future.delayed(const Duration(seconds: 86400), () {
       _showNotification(dates);
@@ -254,7 +251,7 @@ class _ConfigureState extends State<Configure> {
             color: app_color.widget,
             child: Column(
               children: [
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (_) => const PassCode()));
@@ -282,7 +279,6 @@ class _ConfigureState extends State<Configure> {
                         style: TextStyle(color: app_color.text, fontSize: 16)),
                     value: finger,
                     onChanged: (bool newValue) async {
-
                       final SharedPreferences prefs =
                           await SharedPreferences.getInstance();
                       prefs.remove('boolValue');
@@ -321,8 +317,8 @@ class _ConfigureState extends State<Configure> {
                   },
                 ),
                 reminder == true
-                    ? FlatButton(
-                        color: app_color.widget,
+                    ? TextButton(
+                        // color: app_color.widget,
                         onPressed: () async {
                           debugPrint('reminder');
                           _selectTime();

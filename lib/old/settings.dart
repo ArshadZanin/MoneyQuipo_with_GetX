@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 // Project imports:
-import 'package:money_management/color/app_color.dart' as app_color;
-import 'package:money_management/db/database_expense_category.dart';
-import 'package:money_management/db/database_income_category.dart';
-import 'package:money_management/db/database_transaction.dart';
-import 'package:money_management/onboard_anime/onboard_01.dart';
-import 'package:money_management/settings/configure.dart';
-import 'package:money_management/settings/about.dart';
-import 'package:money_management/splash%20screen/splash_screen.dart';
-import 'package:money_management/widgets/widget_controller.dart';
+import 'package:money_management/old/color/app_color.dart' as app_color;
+import 'package:money_management/old/db/database_expense_category.dart';
+import 'package:money_management/old/db/database_income_category.dart';
+import 'package:money_management/old/db/database_transaction.dart';
+import 'package:money_management/old/onboard_anime/onboard_01.dart';
+import 'package:money_management/old/settings/configure.dart';
+import 'package:money_management/old/settings/about.dart';
+import 'package:money_management/old/splash%20screen/splash_screen.dart';
+import 'package:money_management/old/widgets/widget_controller.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -52,29 +52,26 @@ class _SettingsState extends State<Settings> {
           shrinkWrap: true,
           children: [
             widgets.settingIcon(
-                onPress: (){
+                onPress: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (_) => const Configure()));
                 },
                 icon: Icons.settings_outlined,
-                name: 'Configuration'
-            ),
+                name: 'Configuration'),
             widgets.settingIcon(
-                onPress: (){
+                onPress: () {
                   showDialog<String>(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
                       title: const Text('Are you sure?'),
-                      content: const Text(
-                          'it will delete permanently all data....'),
+                      content:
+                          const Text('it will delete permanently all data....'),
                       actions: <Widget>[
                         TextButton(
                           onPressed: () => Navigator.pop(context, 'Cancel'),
                           child: const Text(
                             'Cancel',
-                            style: TextStyle(
-                              color: Colors.blue
-                          ),
+                            style: TextStyle(color: Colors.blue),
                           ),
                         ),
                         TextButton(
@@ -99,16 +96,14 @@ class _SettingsState extends State<Settings> {
                   );
                 },
                 icon: Icons.settings_backup_restore,
-                name: 'Reset App'
-            ),
+                name: 'Reset App'),
             widgets.settingIcon(
-                onPress: (){
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const Help()));
+                onPress: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (_) => const Help()));
                 },
                 icon: Icons.info_outline,
-                name: 'About Us'
-            ),
+                name: 'About Us'),
           ]),
     );
   }

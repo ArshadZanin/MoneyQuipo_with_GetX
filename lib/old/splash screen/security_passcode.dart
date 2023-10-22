@@ -1,14 +1,14 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:money_management/widgets/widget_controller.dart';
+import 'package:money_management/old/widgets/widget_controller.dart';
 
 // Package imports:
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
-import 'package:money_management/color/app_color.dart' as app_color;
-import 'package:money_management/home.dart';
+import 'package:money_management/old/color/app_color.dart' as app_color;
+import 'package:money_management/old/home.dart';
 
 class SecurityPasscode extends StatefulWidget {
   const SecurityPasscode({Key? key}) : super(key: key);
@@ -73,7 +73,7 @@ class _SecurityPasscodeState extends State<SecurityPasscode> {
     }
   }
 
-  void inputNum(String num){
+  void inputNum(String num) {
     if (count != 4) {
       if (passcode.length != 4) {
         passcode = passcode + num;
@@ -131,15 +131,15 @@ class _SecurityPasscodeState extends State<SecurityPasscode> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              widgets.passcodeButton('1', (){
+              widgets.passcodeButton('1', () {
                 inputNum('1');
               }),
               widgets.boxW(5),
-              widgets.passcodeButton('2', (){
+              widgets.passcodeButton('2', () {
                 inputNum('2');
               }),
               widgets.boxW(5),
-              widgets.passcodeButton('3', (){
+              widgets.passcodeButton('3', () {
                 inputNum('3');
               }),
             ],
@@ -147,15 +147,15 @@ class _SecurityPasscodeState extends State<SecurityPasscode> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              widgets.passcodeButton('4', (){
+              widgets.passcodeButton('4', () {
                 inputNum('4');
               }),
               widgets.boxW(5),
-              widgets.passcodeButton('5', (){
+              widgets.passcodeButton('5', () {
                 inputNum('5');
               }),
               widgets.boxW(5),
-              widgets.passcodeButton('6', (){
+              widgets.passcodeButton('6', () {
                 inputNum('6');
               }),
             ],
@@ -163,15 +163,15 @@ class _SecurityPasscodeState extends State<SecurityPasscode> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              widgets.passcodeButton('7', (){
+              widgets.passcodeButton('7', () {
                 inputNum('7');
               }),
               widgets.boxW(5),
-              widgets.passcodeButton('8', (){
+              widgets.passcodeButton('8', () {
                 inputNum('8');
               }),
               widgets.boxW(5),
-              widgets.passcodeButton('9', (){
+              widgets.passcodeButton('9', () {
                 inputNum('9');
               }),
             ],
@@ -179,14 +179,12 @@ class _SecurityPasscodeState extends State<SecurityPasscode> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              widgets.passcodeButton('Ok', (){
+              widgets.passcodeButton('Ok', () {
                 if (passcode.length == 4) {
                   debugPrint('$passcode  $passcodeFromDb');
                   if (passcode == passcodeFromDb) {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => const MyHomePage()));
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (_) => const MyHomePage()));
                   } else {
                     setState(() {
                       passcode = '';
@@ -196,11 +194,11 @@ class _SecurityPasscodeState extends State<SecurityPasscode> {
                 }
               }),
               widgets.boxW(5),
-              widgets.passcodeButton('0', (){
+              widgets.passcodeButton('0', () {
                 inputNum('0');
               }),
               widgets.boxW(5),
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   if (count != 0) {
                     setState(() {

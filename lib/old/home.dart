@@ -6,17 +6,17 @@ import 'package:get/get.dart';
 import 'package:animations/animations.dart';
 
 // Project imports:
-import 'package:money_management/accounts.dart';
-import 'package:money_management/color/app_color.dart' as app_color;
-import 'package:money_management/db/database_expense_category.dart';
-import 'package:money_management/db/database_income_category.dart';
-import 'package:money_management/db/database_transaction.dart';
-import 'package:money_management/getx_controller/transactions_controller.dart';
-import 'package:money_management/onboard_anime/onboard_01.dart';
-import 'package:money_management/settings.dart';
-import 'package:money_management/stats.dart';
-import 'package:money_management/transaction/add_transaction.dart';
-import 'package:money_management/transactions.dart';
+import 'package:money_management/old/accounts.dart';
+import 'package:money_management/old/color/app_color.dart' as app_color;
+import 'package:money_management/old/db/database_expense_category.dart';
+import 'package:money_management/old/db/database_income_category.dart';
+import 'package:money_management/old/db/database_transaction.dart';
+import 'package:money_management/old/getx_controller/transactions_controller.dart';
+import 'package:money_management/old/onboard_anime/onboard_01.dart';
+import 'package:money_management/old/settings.dart';
+import 'package:money_management/old/stats.dart';
+import 'package:money_management/old/transaction/add_transaction.dart';
+import 'package:money_management/old/transactions.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -27,7 +27,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
-
   final values = Get.put(TransactionController());
   final handler = Get.put(DatabaseHandler());
   final handler1 = Get.put(DatabaseHandlerIncomeCategory());
@@ -75,9 +74,7 @@ class _MyHomePageState extends State<MyHomePage>
             controller: controller,
             indicatorWeight: 2.0,
             labelColor: Colors.red,
-            unselectedLabelStyle: const TextStyle(
-                backgroundColor: Colors.red
-            ),
+            unselectedLabelStyle: const TextStyle(backgroundColor: Colors.red),
             unselectedLabelColor: Colors.grey,
             indicatorPadding: const EdgeInsets.all(5.0),
             indicatorColor: const Color(0xFFFCC3C3),

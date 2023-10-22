@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:money_management/db/database_transaction.dart';
-import 'package:money_management/widgets/widget_controller.dart';
+import 'package:money_management/old/db/database_transaction.dart';
+import 'package:money_management/old/widgets/widget_controller.dart';
 
-class TransactionController extends GetxController{
-
-
+class TransactionController extends GetxController {
   final widgets = Get.put(WidgetController());
 
   ///value declarations
@@ -23,7 +21,7 @@ class TransactionController extends GetxController{
   final handler = Get.put(DatabaseHandler());
   // final values = Get.put(TransactionController());
 
-///init state of getX
+  ///init state of getX
   @override
   void onInit() {
     super.onInit();
@@ -36,14 +34,13 @@ class TransactionController extends GetxController{
   ///this is used for take data from database and it will update the values
   void dataTake() async {
     late final _dateYear =
-    _dateController.text.substring(8, _dateController.text.length);
+        _dateController.text.substring(8, _dateController.text.length);
     late final _dateMonth =
-    _dateController.text.substring(0, _dateController.text.length - 9);
-
+        _dateController.text.substring(0, _dateController.text.length - 9);
 
     ///take database list to here///
     final List<Map<String, Object?>> databaseList =
-    await handler.retrieveUsersDatabase();
+        await handler.retrieveUsersDatabase();
     // debugPrint("hello : $databaseList");
 
     ///take date///
@@ -71,8 +68,7 @@ class TransactionController extends GetxController{
       if (dateIs == _dateMonth &&
           dateLast == _dateYear &&
           databaseList[j]['trans'] == 'income') {
-        final double value = double.parse(databaseList[j]['amount']
-            .toString());
+        final double value = double.parse(databaseList[j]['amount'].toString());
         total = total + value;
       }
     }
@@ -90,8 +86,7 @@ class TransactionController extends GetxController{
       if (dateIs == _dateMonth &&
           dateLast == _dateYear &&
           databaseList[j]['trans'] == 'expense') {
-        final double value = double
-            .parse(databaseList[j]['amount'].toString());
+        final double value = double.parse(databaseList[j]['amount'].toString());
         total1 = total1 + value;
       }
     }
@@ -101,9 +96,8 @@ class TransactionController extends GetxController{
   }
 
   ///this is used for check the time
-  void dataCheck({required DateTime selectedDate}){
-    _dateController.text =
-        DateFormat('MMM dd, yyyy').format(selectedDate);
+  void dataCheck({required DateTime selectedDate}) {
+    _dateController.text = DateFormat('MMM dd, yyyy').format(selectedDate);
     for (int i = 0; i < listDate.length; i++) {
       if (listDate[i] == _dateController.text) {
         flag = 1.obs;
@@ -113,6 +107,4 @@ class TransactionController extends GetxController{
       }
     }
   }
-
-
 }
