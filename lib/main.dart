@@ -1,12 +1,18 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
-
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-// Project imports:
-import 'package:money_management/old/splash%20screen/splash_screen.dart';
+import 'package:money_management/refactored/constants/app_colors.dart';
+import 'package:money_management/refactored/controllers/shared_pref_controller.dart';
 
-void main() {
+import 'package:money_management/refactored/screens/splash_screen.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+  await Get.put(SharedPrefController()).initialize();
   runApp(const MyApp());
 }
 
@@ -15,15 +21,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      checkerboardOffscreenLayers: true,
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Money Management',
       theme: ThemeData(
         fontFamily: 'Saira',
-        primarySwatch: Colors.red,
+        primaryColor: AppColor.shadowGreen,
       ),
-      home: const SplashScreen1Sub(),
+      home: const SplashScreen(),
     );
   }
 }

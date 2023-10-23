@@ -14,7 +14,6 @@ import 'package:money_management/old/db/database_reminder.dart';
 import 'package:money_management/old/settings/expense_category.dart';
 import 'package:money_management/old/settings/income_category.dart';
 import 'package:money_management/old/settings/passcode.dart';
-import 'package:money_management/old/splash%20screen/splash_screen.dart';
 import 'package:money_management/old/transaction/add_transaction.dart';
 
 class Configure extends StatefulWidget {
@@ -71,12 +70,12 @@ class _ConfigureState extends State<Configure> {
 
     ///notification settings///
     const androidInitilize = AndroidInitializationSettings('app_icon');
-    const iOsInitilize = IOSInitializationSettings();
+    const iOsInitilize = DarwinInitializationSettings();
     const initializationSettings =
         InitializationSettings(android: androidInitilize, iOS: iOsInitilize);
     appNotification = FlutterLocalNotificationsPlugin();
     appNotification!.initialize(initializationSettings,
-        onSelectNotification: notificationSelected);
+        onDidReceiveNotificationResponse: notificationSelected);
 
     ///database handler///
 
@@ -98,7 +97,7 @@ class _ConfigureState extends State<Configure> {
   Future<void> _showNotification(String dates) async {
     const androidDetails =
         AndroidNotificationDetails('Channel ID', 'Programmer');
-    const iOsDetails = IOSNotificationDetails();
+    const iOsDetails = DarwinNotificationDetails();
     const generalNotificationDetails =
         NotificationDetails(android: androidDetails, iOS: iOsDetails);
 
@@ -132,22 +131,22 @@ class _ConfigureState extends State<Configure> {
 
     debugPrint('time id: $dateAndTime');
 
-    final DateTime reminderTime = DateTime.parse(dateAndTime);
-    appNotification!.schedule(0, 'Don`t Forget to add transactions...',
-        'add now', reminderTime, generalNotificationDetails);
-    int delay = 86400;
+    // final DateTime reminderTime = DateTime.parse(dateAndTime);
+    // appNotification!.zonedSchedule(0, 'Don`t Forget to add transactions...',
+    //     'add now', reminderTime,uiLocalNotificationDateInterpretation: generalNotificationDetails);
+    // int delay = 86400;
 
-    for (int i = 1; i <= 3; i++) {
-      final DateTime reminderTime =
-          DateTime.parse(dateAndTime).add(Duration(seconds: delay));
-      debugPrint('time is: $reminderTime');
+    // for (int i = 1; i <= 3; i++) {
+    //   final DateTime reminderTime =
+    //       DateTime.parse(dateAndTime).add(Duration(seconds: delay));
+    //   debugPrint('time is: $reminderTime');
 
-      final scheduledTime = reminderTime;
-      debugPrint('$i : $scheduledTime');
-      appNotification!.schedule(i, 'Don`t Forget to add transactions...',
-          'add now', scheduledTime, generalNotificationDetails);
-      delay += 86400;
-    }
+    //   final scheduledTime = reminderTime;
+    //   debugPrint('$i : $scheduledTime');
+    //   appNotification!.schedule(i, 'Don`t Forget to add transactions...',
+    //       'add now', scheduledTime, generalNotificationDetails);
+    //   delay += 86400;
+    // }
   }
 
   @Deprecated('message')
@@ -258,9 +257,9 @@ class _ConfigureState extends State<Configure> {
                   },
                   child: Container(
                       alignment: Alignment.centerLeft,
-                      child: Column(
+                      child: const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Text(
                             'Set PassCode',
                             style:
@@ -352,7 +351,7 @@ class _ConfigureState extends State<Configure> {
     );
   }
 
-  Future<void> notificationSelected(String? payload) async {
+  Future<void> notificationSelected(NotificationResponse? payload) async {
     Future.delayed(const Duration(milliseconds: 0), () {
       Navigator.push(
           context, MaterialPageRoute(builder: (_) => const AddTrans()));
