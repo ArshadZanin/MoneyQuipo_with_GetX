@@ -1,7 +1,7 @@
 
 import 'package:get/get.dart';
-import 'package:money_management/refactored/models/category.dart';
-import 'package:money_management/refactored/models/transaction.dart';
+import 'package:money_management/refactored/core/models/category.dart';
+import 'package:money_management/refactored/core/models/transaction.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 

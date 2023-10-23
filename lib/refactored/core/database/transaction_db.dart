@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:money_management/refactored/models/transaction.dart';
+import 'package:money_management/refactored/core/models/transaction.dart';
 import 'package:sqflite/sqflite.dart' hide Transaction;
 import 'package:path/path.dart';
 
@@ -39,11 +39,37 @@ class TransactionDb extends GetxController {
     return result;
   }
 
+  ///this function is used to update user data into database
+  Future<bool> updateTransaction({required Transaction transaction}) async {
+    final db = await database;
+
+    final data = transaction.toMap();
+    data.remove('id');
+
+    await db!.update(
+      'transactions',
+      data,
+      where: 'id = ?',
+      whereArgs: [transaction.id],
+    );
+    return true;
+  }
+
+  ///this function is used to delete data from database with the id of the row
+  Future<void> deleteTransaction(int id) async {
+    final db = await initializeDB();
+    await db.delete(
+      'transactions',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
   ///this function is used to fetch data from database
   Future<List<Transaction>> fetchTransactions() async {
     final Database db = await initializeDB();
     final List<Map<String, Object?>> queryResult =
-        await db.query('transactions');
+        await db.query('transactions', orderBy: 'dateTime desc');
     return queryResult.map((e) => Transaction.fromMap(e)).toList();
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:money_management/refactored/constants/app_colors.dart';
-import 'package:money_management/refactored/controllers/shared_pref_controller.dart';
+import 'package:money_management/refactored/core/constants/app_colors.dart';
+import 'package:money_management/refactored/core/controllers/shared_pref_controller.dart';
 
 import 'package:money_management/refactored/screens/splash_screen.dart';
 

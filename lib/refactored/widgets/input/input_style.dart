@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_management/refactored/constants/app_colors.dart';
+import 'package:money_management/refactored/core/constants/app_colors.dart';
 
 class InputStyle {
   static InputDecoration getInputDecoration({

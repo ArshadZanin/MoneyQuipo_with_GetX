@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:money_management/refactored/controllers/splash_controller.dart';
+import 'package:money_management/refactored/core/controllers/splash_controller.dart';
 import 'package:money_management/refactored/widgets/animation/m_animation.dart';
 import 'package:money_management/refactored/widgets/container/m_container.dart';
 

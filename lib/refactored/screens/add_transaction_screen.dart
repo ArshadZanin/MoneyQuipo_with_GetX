@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:money_management/refactored/controllers/add_transaction_controller.dart';
-import 'package:money_management/refactored/models/transaction.dart';
+import 'package:money_management/refactored/core/controllers/add_transaction_controller.dart';
+import 'package:money_management/refactored/core/models/transaction.dart';
 import 'package:money_management/refactored/widgets/button/m_button.dart';
 import 'package:money_management/refactored/widgets/container/m_container.dart';
 import 'package:money_management/refactored/widgets/input/m_input_dropdown_field.dart';
@@ -10,7 +10,12 @@ import 'package:money_management/refactored/widgets/space/m_space.dart';
 import 'package:money_management/refactored/widgets/text/m_text.dart';
 
 class AddTransactionScreen extends StatefulWidget {
-  AddTransactionScreen({Key? key}) : super(key: key);
+  AddTransactionScreen({
+    Key? key,
+    this.transaction,
+  }) : super(key: key);
+
+  final Transaction? transaction;
 
   @override
   State<AddTransactionScreen> createState() => _AddTransactionScreenState();
@@ -24,7 +29,9 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   @override
   void initState() {
     Future.delayed(Duration.zero, () {
-      controller.initialize();
+      controller.initialize(
+        widget.transaction,
+      );
     });
     super.initState();
   }
@@ -56,6 +63,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                     color: pageTheme,
                     onTap: () async {
                       controller.transactionType.value = type;
+                      controller.catergory.value = null;
                       await controller.fetchCategories();
                       pageTheme = _getPageTheme(type);
                       setState(() {});
@@ -172,7 +180,11 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
               child: MButton(
                 spacing: 30,
                 onPress: () async {
-                  await controller.onSave();
+                  if (widget.transaction != null) {
+                    await controller.onUpdate(widget.transaction!);
+                  } else {
+                    await controller.onSave();
+                  }
                   Get.back();
                 },
                 text: 'Save',

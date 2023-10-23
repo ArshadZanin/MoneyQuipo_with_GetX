@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:money_management/refactored/controllers/shared_pref_controller.dart';
+import 'package:money_management/refactored/core/controllers/shared_pref_controller.dart';
 import 'package:money_management/refactored/screens/home_screen.dart';
 
 class SecurityController extends GetxController {

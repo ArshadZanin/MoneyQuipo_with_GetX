@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:get/get.dart';
-import 'package:money_management/refactored/controllers/security_controller.dart';
+import 'package:money_management/refactored/core/controllers/security_controller.dart';
 import 'package:money_management/refactored/widgets/space/m_space.dart';
 import 'package:money_management/refactored/widgets/text/m_text.dart';
 

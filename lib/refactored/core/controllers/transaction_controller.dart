@@ -1,9 +1,12 @@
 import 'package:get/get.dart';
-import 'package:money_management/refactored/database/transaction_db.dart';
-import 'package:money_management/refactored/models/transaction.dart';
+import 'package:intl/intl.dart';
+import 'package:money_management/refactored/core/database/transaction_db.dart';
+import 'package:money_management/refactored/core/models/transaction.dart';
 
 class TransactionController extends GetxController {
   final transactionDb = Get.put(TransactionDb());
+
+  DateFormat format = DateFormat('dd - MMM - yyyy, hh:ss aa');
 
   RxDouble income = RxDouble(0);
   RxDouble expense = RxDouble(0);
@@ -19,6 +22,10 @@ class TransactionController extends GetxController {
 
   Future<void> fetchTransactions() async {
     transactions.value = await transactionDb.fetchTransactions();
+    calculateAmounts();
+  }
+
+  void calculateAmounts() {
     income.value = 0;
     expense.value = 0;
     for (final transaction in transactions) {
@@ -28,5 +35,11 @@ class TransactionController extends GetxController {
         expense.value = expense.value + (transaction.amount?.toDouble() ?? 0);
       }
     }
+  }
+
+  Future<void> deleteTransaction(int id, int index) async {
+    await transactionDb.deleteTransaction(id);
+    transactions.removeAt(index);
+    calculateAmounts();
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:money_management/refactored/constants/app_colors.dart';
-import 'package:money_management/refactored/controllers/transaction_controller.dart';
-import 'package:money_management/refactored/models/transaction.dart';
+import 'package:money_management/refactored/core/constants/app_colors.dart';
+import 'package:money_management/refactored/core/controllers/transaction_controller.dart';
+import 'package:money_management/refactored/core/models/transaction.dart';
 import 'package:money_management/refactored/screens/add_transaction_screen.dart';
 import 'package:money_management/refactored/widgets/container/m_container.dart';
 import 'package:money_management/refactored/widgets/space/m_space.dart';
@@ -32,113 +32,116 @@ class _TransactionScreenState extends State<TransactionScreen> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(bottom: 50),
-        child: CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              backgroundColor: Colors.white,
-              pinned: true,
-              title: Row(
-                children: [
-                  const MText(
-                    text: 'Money Quipo.',
-                    color: AppColor.tertiary,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => AddTransactionScreen(),
-                        ),
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.post_add_rounded,
-                      color: Colors.black,
+        child: RefreshIndicator(
+          backgroundColor: Colors.white,
+          color: AppColor.greenBox1,
+          onRefresh: () async {
+            await controller.fetchTransactions();
+          },
+          child: CustomScrollView(
+            slivers: <Widget>[
+              SliverAppBar(
+                backgroundColor: Colors.white,
+                pinned: true,
+                title: Row(
+                  children: [
+                    const MText(
+                      text: 'Money Quipo.',
+                      color: AppColor.tertiary,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ),
-                ],
-              ),
-              expandedHeight: 292.0,
-              flexibleSpace: LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-                  return FlexibleSpaceBar(
-                    background: Container(
-                      color: Colors.white,
-                      child: Obx(() {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            MSpace.vertical(80),
-                            Row(
-                              children: [
-                                MSpace.horizonital(16),
-                                _buildAmountCard(
-                                  context: context,
-                                  shadowColor: AppColor.shadowGreen,
-                                  mainColor1: AppColor.greenBox1,
-                                  mainColor2: AppColor.greenBox2,
-                                  heading: 'Earned',
-                                  value: '${controller.income.value}',
-                                  name: 'income',
-                                ),
-                                MSpace.horizonital(16),
-                                _buildAmountCard(
-                                  context: context,
-                                  shadowColor: AppColor.shadowRed,
-                                  mainColor1: AppColor.redBox1,
-                                  mainColor2: AppColor.redBox2,
-                                  heading: 'Spent',
-                                  value: '${controller.expense.value}',
-                                  name: 'expense',
-                                ),
-                                MSpace.horizonital(16),
-                              ],
-                            ),
-                            MSpace.vertical(16),
-                            _buildBalanceCard(
-                              expense: controller.expense.value,
-                              income: controller.income.value,
-                            ),
-                            MSpace.vertical(8),
-                            const MText(
-                              text: 'Transactions',
-                              fontSize: 20,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ],
-                        );
-                      }),
-                    ),
-                  );
-                },
-              ),
-            ),
-            Obx(() {
-              return SliverList(
-                delegate: SliverChildListDelegate([
-                  if (controller.transactions.isEmpty)
-                    const MContainer(
-                      height: 200,
-                      width: double.infinity,
-                      alignment: Alignment.center,
-                      child: MText(
-                        text: 'No transactions available.',
+                    const Spacer(),
+                    IconButton(
+                      onPressed: () {
+                        Get.to(() => AddTransactionScreen());
+                      },
+                      icon: const Icon(
+                        Icons.post_add_rounded,
+                        color: Colors.black,
                       ),
                     ),
-                  ...List.generate(controller.transactions.length, (index) {
-                    return _buildTransactionItem(
-                      controller.transactions[index],
+                  ],
+                ),
+                expandedHeight: 292.0,
+                flexibleSpace: LayoutBuilder(
+                  builder: (BuildContext context, BoxConstraints constraints) {
+                    return FlexibleSpaceBar(
+                      background: Container(
+                        color: Colors.white,
+                        child: Obx(() {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              MSpace.vertical(80),
+                              Row(
+                                children: [
+                                  MSpace.horizonital(16),
+                                  _buildAmountCard(
+                                    context: context,
+                                    shadowColor: AppColor.shadowGreen,
+                                    mainColor1: AppColor.greenBox1,
+                                    mainColor2: AppColor.greenBox2,
+                                    heading: 'Earned',
+                                    value: '${controller.income.value}',
+                                    name: 'income',
+                                  ),
+                                  MSpace.horizonital(16),
+                                  _buildAmountCard(
+                                    context: context,
+                                    shadowColor: AppColor.shadowRed,
+                                    mainColor1: AppColor.redBox1,
+                                    mainColor2: AppColor.redBox2,
+                                    heading: 'Spent',
+                                    value: '${controller.expense.value}',
+                                    name: 'expense',
+                                  ),
+                                  MSpace.horizonital(16),
+                                ],
+                              ),
+                              MSpace.vertical(16),
+                              _buildBalanceCard(
+                                expense: controller.expense.value,
+                                income: controller.income.value,
+                              ),
+                              MSpace.vertical(8),
+                              const MText(
+                                text: 'Transactions',
+                                fontSize: 20,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ],
+                          );
+                        }),
+                      ),
                     );
-                  }),
-                ]),
-              );
-            }),
-          ],
+                  },
+                ),
+              ),
+              Obx(() {
+                return SliverList(
+                  delegate: SliverChildListDelegate([
+                    if (controller.transactions.isEmpty)
+                      const MContainer(
+                        height: 200,
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        child: MText(
+                          text: 'No transactions available.',
+                        ),
+                      ),
+                    ...List.generate(controller.transactions.length, (index) {
+                      return _buildTransactionItem(
+                        controller.transactions[index],
+                        index,
+                      );
+                    }),
+                  ]),
+                );
+              }),
+            ],
+          ),
         ),
       ),
     );
@@ -167,30 +170,28 @@ class _TransactionScreenState extends State<TransactionScreen> {
             tileMode: TileMode.repeated,
           ),
           padding: const EdgeInsets.all(12),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                MText(
-                  text: heading,
-                  color: Colors.white,
-                  letterSpacing: 1,
-                ),
-                MText(
-                  text: value,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  letterSpacing: 1,
-                ),
-                MText(
-                  text: '$name this month',
-                  color: Colors.white,
-                  letterSpacing: 1,
-                ),
-              ],
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              MText(
+                text: heading,
+                color: Colors.white,
+                letterSpacing: 1,
+              ),
+              MText(
+                text: value,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                letterSpacing: 1,
+              ),
+              MText(
+                text: '$name totally',
+                color: Colors.white,
+                letterSpacing: 1,
+              ),
+            ],
           ),
         ),
       ),
@@ -205,7 +206,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Material(
         elevation: 5,
-        shadowColor: const Color(0xff4792ff),
+        shadowColor:
+            income - expense < 0 ? AppColor.redBox1 : AppColor.greenBox1,
         borderRadius: BorderRadius.circular(10),
         color: Colors.white,
         child: Column(
@@ -223,26 +225,17 @@ class _TransactionScreenState extends State<TransactionScreen> {
                   lineHeight: 20.0,
                   animationDuration: 2000,
                   percent: percentBar(income, expense),
-                  center: income - expense < 0
-                      ? Text(
-                          '${income - expense}',
-                          style: const TextStyle(
-                            color: Color(0xffb10000),
-                            letterSpacing: 1,
-                          ),
-                        )
-                      : Text(
-                          '${income - expense}',
-                          style: const TextStyle(
-                            color: Color(0xFFffffff),
-                            letterSpacing: 1,
-                          ),
-                        ),
-                  // linearStrokeCap: LinearStrokeCap.roundAll,
-                  barRadius: const Radius.circular(30),
+                  center: MText(
+                    text: '${income - expense}',
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1,
+                  ),
+                  barRadius: const Radius.circular(10),
                   progressColor: expense <= income
-                      ? Colors.lightBlueAccent
-                      : Colors.redAccent,
+                      ? Colors.lightBlueAccent.shade700
+                      : Colors.redAccent.shade700,
                 ),
               ),
             ),
@@ -252,26 +245,106 @@ class _TransactionScreenState extends State<TransactionScreen> {
     );
   }
 
-  Widget _buildTransactionItem(Transaction transaction) {
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundColor: Colors.grey.shade200,
-        child: Icon(
-          Icons.attach_money,
-          color: transaction.transactionType == TransactionType.income
-              ? Colors.green
-              : Colors.red,
+  Widget _buildTransactionItem(Transaction transaction,int index) {
+    return Builder(builder: (context) {
+      return Card(
+        elevation: 1,
+        child: ListTile(
+          onLongPress: () => _showMenu(
+            context,
+            transaction,
+            index,
+          ),
+          leading: MContainer(
+            color: const Color.fromRGBO(238, 238, 238, 1),
+            padding: const EdgeInsets.all(16),
+            borderRadius: BorderRadius.circular(10),
+            child: Icon(
+              Icons.attach_money,
+              color: transaction.transactionType == TransactionType.income
+                  ? Colors.green
+                  : Colors.red,
+            ),
+          ),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              MText(
+                text: _transTitle(transaction),
+                fontSize: 18,
+                color: Colors.black,
+              ),
+              MText(
+                text: '${transaction.account?.name.toUpperCase()}',
+                fontSize: 16,
+                color: Colors.grey.shade600,
+              ),
+              MText(
+                text: controller.format.format(
+                  transaction.dateTime ?? DateTime.now(),
+                ),
+                fontSize: 14,
+                color: Colors.black,
+              ),
+            ],
+          ),
+          trailing: MText(
+            text: '${transaction.amount}',
+            fontSize: 16,
+            color: transaction.transactionType == TransactionType.income
+                ? Colors.green
+                : Colors.red,
+          ),
         ),
+      );
+    });
+  }
+
+  void _showMenu(
+    BuildContext context,
+    Transaction transaction,
+    int index,
+  ) {
+    final RenderBox overlay =
+        Overlay.of(context).context.findRenderObject() as RenderBox;
+    final RenderBox button = context.findRenderObject() as RenderBox;
+    final Offset position =
+        button.localToGlobal(Offset.zero, ancestor: overlay);
+
+    showMenu(
+      context: context,
+      position: RelativeRect.fromLTRB(
+        position.dx,
+        position.dy + button.size.height,
+        position.dx + button.size.width,
+        position.dy + button.size.height,
       ),
-      title: Text(
-        transaction.account?.name ?? '',
-      ),
-      subtitle: Text(
-        'Category: ${transaction.transactionType?.name}',
-      ),
-      trailing: Text(
-        '${transaction.amount ?? ''}',
-      ),
+      items: <PopupMenuEntry>[
+        PopupMenuItem(
+          onTap: () {
+            Get.to(
+              () => AddTransactionScreen(
+                transaction: transaction,
+              ),
+            );
+          },
+          child: const ListTile(
+            leading: Icon(Icons.edit),
+            title: Text('Edit'),
+          ),
+        ),
+        PopupMenuItem(
+          onTap: () => controller.deleteTransaction(
+            transaction.id ?? 0,
+            index,
+          ),
+          child: const ListTile(
+            leading: Icon(Icons.delete),
+            title: Text('Delete'),
+          ),
+        ),
+      ],
     );
   }
 
@@ -291,5 +364,11 @@ class _TransactionScreenState extends State<TransactionScreen> {
     } else {
       return 0.0;
     }
+  }
+
+  String _transTitle(Transaction trans) {
+    return trans.transactionType == TransactionType.income
+        ? 'Recieved from ${trans.category}'
+        : 'Paid for ${trans.category}';
   }
 }

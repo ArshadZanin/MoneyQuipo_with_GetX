@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_management/refactored/constants/app_colors.dart';
+import 'package:money_management/refactored/core/constants/app_colors.dart';
 import 'package:money_management/refactored/widgets/container/m_container.dart';
 import 'package:money_management/refactored/widgets/text/m_text.dart';
 

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:money_management/refactored/models/transaction.dart';
+import 'package:money_management/refactored/core/models/transaction.dart';
 
 class Category {
   final int? id;
