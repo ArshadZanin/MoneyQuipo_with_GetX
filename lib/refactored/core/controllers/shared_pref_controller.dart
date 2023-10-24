@@ -12,23 +12,27 @@ class SharedPrefController extends GetxController {
     return prefs.getBool('isSecured') ?? false;
   }
 
-  bool setReminder() {
+  bool getReminder() {
     return prefs.getBool('setReminder') ?? false;
+  }
+
+  Future<void> setReminder(bool setReminder) async {
+    await prefs.setBool('setReminder', setReminder);
   }
 
   String? getSecurity() {
     return prefs.getString('security');
   }
 
-  void updateSecurity({
+  Future<void> updateSecurity({
     String? security,
-  }) {
+  }) async {
     if (security == null) {
-      prefs.setBool('isSecured', false);
-      prefs.remove('security');
+      await prefs.setBool('isSecured', false);
+      await prefs.remove('security');
     } else {
-      prefs.setBool('isSecured', true);
-      prefs.setString('security', security);
+      await prefs.setBool('isSecured', true);
+      await prefs.setString('security', security);
     }
   }
 }

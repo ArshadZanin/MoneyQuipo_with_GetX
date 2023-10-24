@@ -30,7 +30,7 @@ class SecurityController extends GetxController {
     security.value = pref.getSecurity();
     if (!setPasscode) {
       if (security.value == null) {
-        pref.updateSecurity();
+       await pref.updateSecurity();
         await onSuccess(null);
       }
     }

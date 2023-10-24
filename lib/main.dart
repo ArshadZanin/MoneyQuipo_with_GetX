@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:money_management/refactored/core/constants/app_colors.dart';
 import 'package:money_management/refactored/core/controllers/shared_pref_controller.dart';
+import 'package:money_management/refactored/core/utils/notification.dart';
 
 import 'package:money_management/refactored/screens/splash_screen.dart';
 
@@ -12,6 +13,7 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  await NotificationService.initialize();
   await Get.put(SharedPrefController()).initialize();
   runApp(const MyApp());
 }

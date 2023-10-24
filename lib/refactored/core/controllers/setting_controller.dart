@@ -9,6 +9,6 @@ class SettingsController extends GetxController {
 
   void initialize() {
     appLock.value = pref.isSecured();
-    setReminder.value = pref.setReminder();
+    setReminder.value = pref.getReminder();
   }
 }

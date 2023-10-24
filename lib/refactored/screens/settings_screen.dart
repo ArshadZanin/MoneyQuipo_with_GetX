@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:money_management/refactored/core/constants/app_colors.dart';
 import 'package:money_management/refactored/core/controllers/setting_controller.dart';
 import 'package:money_management/refactored/core/models/transaction.dart';
+import 'package:money_management/refactored/screens/about_screen.dart';
 import 'package:money_management/refactored/screens/catergory_configure_screen.dart';
 import 'package:money_management/refactored/screens/security_screen.dart';
 import 'package:money_management/refactored/widgets/space/m_space.dart';
@@ -86,9 +87,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         Get.to(
                           () => SecurityScreen(
                             setPasscode: true,
-                            onSuccess: (passcode) {
+                            onSuccess: (passcode) async {
                               Get.back();
-                              controller.pref
+                              await controller.pref
                                   .updateSecurity(security: passcode);
                               controller.appLock.value = newValue;
                             },
@@ -100,7 +101,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             setPasscode: false,
                             onSuccess: (passcode) async {
                               Get.back();
-                              controller.pref.updateSecurity();
+                              await controller.pref.updateSecurity();
                               controller.appLock.value = newValue;
                             },
                           ),
@@ -116,7 +117,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             setPasscode: true,
                             onSuccess: (passcode) async {
                               Get.back();
-                              controller.pref.updateSecurity(
+                              await controller.pref.updateSecurity(
                                 security: passcode,
                               );
                             },
@@ -134,31 +135,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             );
           }),
-          MSpace.vertical(8),
-          Obx(() {
-            return Card(
-              color: Colors.white,
-              child: SwitchListTile(
-                title: const MText(
-                  text: 'Set Reminder',
-                  color: AppColor.tertiary,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-                value: controller.setReminder.value,
-                onChanged: (bool newValue) async {
-                  controller.setReminder.value = newValue;
-                },
-              ),
-            );
-          }),
+          // MSpace.vertical(8),
+          // Obx(() {
+          //   return Card(
+          //     color: Colors.white,
+          //     child: SwitchListTile(
+          //       title: const MText(
+          //         text: 'Set Reminder',
+          //         color: AppColor.tertiary,
+          //         fontSize: 18,
+          //         fontWeight: FontWeight.bold,
+          //       ),
+          //       value: controller.setReminder.value,
+          //       onChanged: (bool newValue) async {
+          //         controller.setReminder.value = newValue;
+          //        await controller.pref.setReminder(newValue);
+          //         if (newValue) {
+          //           await NotificationService.scheduleDailyNotification();
+          //         } else {
+          //           await NotificationService.cancelNotifications();
+          //         }
+          //       },
+          //     ),
+          //   );
+          // }),
+          // ListTile(
+          //   onTap: () {},
+          //   leading: const Icon(Icons.refresh_outlined),
+          //   title: const MText(text: 'Reset app'),
+          // ),
           ListTile(
-            onTap: () {},
-            leading: const Icon(Icons.refresh_outlined),
-            title: const MText(text: 'Reset app'),
-          ),
-          ListTile(
-            onTap: () {},
+            onTap: () {
+              Get.to(() => const AboutScreen());
+            },
             leading: const Icon(Icons.info_outline_rounded),
             title: const MText(text: 'About us'),
           ),
