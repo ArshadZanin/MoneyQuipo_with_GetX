@@ -10,7 +10,7 @@ import 'package:money_management/refactored/widgets/text/m_text.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class TransactionScreen extends StatefulWidget {
-  TransactionScreen({Key? key}) : super(key: key);
+  const TransactionScreen({Key? key}) : super(key: key);
 
   @override
   State<TransactionScreen> createState() => _TransactionScreenState();

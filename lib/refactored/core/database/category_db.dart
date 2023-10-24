@@ -34,7 +34,7 @@ class CategoryDb extends GetxController{
   }
 
   ///this function is used to insert the category into database
-  Future<int> insetCategory(
+  Future<int> insertCategory(
     List<Category> categories,
   ) async {
     int result = 0;

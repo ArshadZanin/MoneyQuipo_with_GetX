@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:money_management/refactored/screens/account_details_screen.dart';
 import 'package:money_management/refactored/screens/analytics_screen.dart';
+import 'package:money_management/refactored/screens/settings_screen.dart';
 import 'package:money_management/refactored/screens/transaction_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -26,14 +27,11 @@ class _HomeScreenState extends State<HomeScreen>
       backgroundColor: Colors.white,
       body: TabBarView(
         controller: controller,
-        children: [
+        children: const [
           TransactionScreen(),
-          const AccountDetailsScreen(),
-          const AnalyticsScreen(),
-          // Settings(),
-          Scaffold(
-            backgroundColor: Colors.purple,
-          ),
+          AccountDetailsScreen(),
+          AnalyticsScreen(),
+          SettingsScreen(),
         ],
       ),
       bottomNavigationBar: Container(

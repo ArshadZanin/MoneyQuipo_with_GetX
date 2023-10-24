@@ -11,7 +11,14 @@ class SplashController extends GetxController {
     await Get.put(TransactionDb()).initializeDB();
     await Get.put(CategoryDb()).initializeDB();
     if (sharedPrefController.isSecured()) {
-      Get.offAll(() => const SecurityScreen());
+      Get.offAll(
+        () => SecurityScreen(
+          setPasscode: false,
+          onSuccess: (_){
+            Get.offAll(() => const HomeScreen());
+          },
+        ),
+      );
     } else {
       Get.offAll(() => const HomeScreen());
     }

@@ -12,7 +12,13 @@ import 'package:money_management/refactored/widgets/text/m_text.dart';
 import 'package:money_management/old/color/app_color.dart' as app_color;
 
 class SecurityScreen extends StatefulWidget {
-  const SecurityScreen({Key? key}) : super(key: key);
+  const SecurityScreen({
+    Key? key,
+    required this.setPasscode,
+    required this.onSuccess,
+  }) : super(key: key);
+  final bool setPasscode;
+  final Function(String?) onSuccess;
 
   @override
   _SecurityScreenState createState() => _SecurityScreenState();
@@ -23,7 +29,10 @@ class _SecurityScreenState extends State<SecurityScreen> {
 
   @override
   void initState() {
-    controller.initialize();
+    controller.initialize(
+      widget.setPasscode,
+      widget.onSuccess,
+    );
     super.initState();
   }
 
@@ -31,6 +40,19 @@ class _SecurityScreenState extends State<SecurityScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: app_color.back,
+      appBar: widget.setPasscode
+          ? AppBar(
+              title: Obx(() {
+                return MText(
+                  text: controller.security.value != null
+                      ? 'Enter previous passcode'
+                      : controller.step.value == UserInputStep.newInput
+                          ? 'Enter new passcode'
+                          : 'Re-enter new passcode',
+                );
+              }),
+            )
+          : null,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -75,7 +97,10 @@ class _SecurityScreenState extends State<SecurityScreen> {
                 (col) {
                   final number = (row * 3) + col + 1;
                   return TextButton(
-                    onPressed: () => controller.addNum(number),
+                    onPressed: () => controller.addNum(
+                      number,
+                      widget.onSuccess,
+                    ),
                     child: MText(
                       text: '$number',
                       fontSize: 20,
@@ -92,7 +117,10 @@ class _SecurityScreenState extends State<SecurityScreen> {
             children: [
               MSpace.horizonital(65),
               TextButton(
-                onPressed: () => controller.addNum(0),
+                onPressed: () => controller.addNum(
+                  0,
+                  widget.onSuccess,
+                ),
                 child: const MText(
                   text: '0',
                   fontSize: 20,

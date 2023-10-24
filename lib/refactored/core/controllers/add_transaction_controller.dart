@@ -59,10 +59,10 @@ class AddTransactionController extends GetxController {
 
   Future<void> addCategory(String name) async {
     final category = Category(
-      name: name,
+      name: name.capitalizeFirst,
       type: transactionType.value,
     );
-    await categoryDb.insetCategory([category]);
+    await categoryDb.insertCategory([category]);
     catergories.add(name);
   }
 
