@@ -1,0 +1,1 @@
+enum Filter { total, annually, monthly, today }

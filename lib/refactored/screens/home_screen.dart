@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:money_management/refactored/screens/account_details_screen.dart';
+import 'package:money_management/refactored/screens/analytics_screen.dart';
 import 'package:money_management/refactored/screens/transaction_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -26,14 +28,8 @@ class _HomeScreenState extends State<HomeScreen>
         controller: controller,
         children: [
           TransactionScreen(),
-          // Accounts(),
-          Scaffold(
-            backgroundColor: Colors.red,
-          ),
-          // Stats(),
-          Scaffold(
-            backgroundColor: Colors.blue,
-          ),
+          const AccountDetailsScreen(),
+          const AnalyticsScreen(),
           // Settings(),
           Scaffold(
             backgroundColor: Colors.purple,
@@ -70,7 +66,6 @@ class _HomeScreenState extends State<HomeScreen>
           ),
         ),
       ),
-      
     );
   }
 }
