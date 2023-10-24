@@ -6,6 +6,7 @@ import 'package:money_management/refactored/core/database/category_db.dart';
 import 'package:money_management/refactored/core/database/transaction_db.dart';
 import 'package:money_management/refactored/core/models/category.dart';
 import 'package:money_management/refactored/core/models/transaction.dart';
+import 'package:money_management/refactored/widgets/snackbar/m_snackbar.dart';
 
 class AddTransactionController extends GetxController {
   final categoryDb = Get.put(CategoryDb());
@@ -73,7 +74,7 @@ class AddTransactionController extends GetxController {
       account: accountType.value,
       amount: num.tryParse(amount.text),
       note: note.text,
-      category: catergory.value,
+      category: catergory.value?.capitalizeFirst,
     );
     await transactionDb.createTransaction([transaction]);
     await transactionController.fetchTransactions();
@@ -87,10 +88,23 @@ class AddTransactionController extends GetxController {
       account: accountType.value,
       amount: num.tryParse(amount.text),
       note: note.text,
-      category: catergory.value,
+      category: catergory.value?.capitalizeFirst,
     );
-    await transactionDb.updateTransaction(transaction:updatedTrans,);
+    await transactionDb.updateTransaction(
+      transaction: updatedTrans,
+    );
     await transactionController.fetchTransactions();
+  }
 
+  bool validate() {
+    if (catergory.value == null) {
+      MSnackbar.error('Please select category');
+      return false;
+    }
+    if (num.tryParse(amount.text) == null) {
+      MSnackbar.error('Please enter amount');
+      return false;
+    }
+    return true;
   }
 }

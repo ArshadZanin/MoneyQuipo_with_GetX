@@ -4,8 +4,8 @@ import 'package:money_management/refactored/core/controllers/category_configure_
 import 'package:money_management/refactored/core/models/category.dart';
 import 'package:money_management/refactored/core/models/transaction.dart';
 import 'package:money_management/refactored/widgets/button/m_button.dart';
-import 'package:money_management/refactored/widgets/container/m_container.dart';
 import 'package:money_management/refactored/widgets/input/m_input_text_field.dart';
+import 'package:money_management/refactored/widgets/snackbar/m_snackbar.dart';
 import 'package:money_management/refactored/widgets/space/m_space.dart';
 import 'package:money_management/refactored/widgets/text/m_text.dart';
 
@@ -164,6 +164,7 @@ class _CategoryConfigureScreenState extends State<CategoryConfigureScreen> {
             MButton(
               onPress: () async {
                 if (text.text.trim().isEmpty) {
+                  MSnackbar.error('Please enter category');
                   return;
                 }
                 if (index == null) {
